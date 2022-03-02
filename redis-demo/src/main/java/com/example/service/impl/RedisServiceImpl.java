@@ -1,8 +1,8 @@
 package com.example.service.impl;
 
 import com.example.service.RedisService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.SetOperations;
@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 @Component
+@RequiredArgsConstructor
 public class RedisServiceImpl implements RedisService {
 
     /**
@@ -33,15 +34,15 @@ public class RedisServiceImpl implements RedisService {
 
     private final RedisTemplate<String, String> redisTemplate;
 
-    /**
-     * 注入
-     *
-     * @param redisTemplate 模板
-     */
-    @Autowired
-    public RedisServiceImpl(RedisTemplate<String, String> redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
+//    /**
+//     * 注入
+//     *
+//     * @param redisTemplate 模板
+//     */
+//    @Autowired
+//    public RedisServiceImpl(RedisTemplate<String, String> redisTemplate) {
+//        this.redisTemplate = redisTemplate;
+//    }
 
     /**
      * 添加 key:string 缓存

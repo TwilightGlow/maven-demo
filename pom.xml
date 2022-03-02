@@ -19,6 +19,9 @@
         <module>redis-demo</module>
         <module>jdk8-demo</module>
         <module>design-mode-demo</module>
+        <module>spring-framework-demo</module>
+        <module>spring-boot-demo</module>
+        <module>spring-mail-demo</module>
     </modules>
 
     <packaging>pom</packaging>

@@ -16,3 +16,15 @@ spring:
 #      max-wait: 5000
 #      max-idle: 8
 #      min-idle: 20
+#  https://github.com/redisson/redisson/wiki/2.-%E9%85%8D%E7%BD%AE%E6%96%B9%E6%B3%95#23-%E5%B8%B8%E7%94%A8%E8%AE%BE%E7%BD%AE
+    redisson:
+      file: classpath:redisson-single.yaml
+#      config: |
+#        singleServerConfig:
+#          password: 123456
+#          address: "redis://127.0.0.1:6379"
+#          database: 0
+#        threads: 0
+#        nettyThreads: 0
+#        codec: !<org.redisson.codec.JsonJacksonCodec> {}
+#        transportMode: "NIO"

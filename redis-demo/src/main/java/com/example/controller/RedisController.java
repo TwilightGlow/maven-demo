@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import com.example.service.KillService;
 import com.example.util.RedisUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,15 @@ import java.util.concurrent.TimeUnit;
  */
 
 @Slf4j
-@RestController("redis")
+@RestController
+@RequestMapping("redis")
 public class RedisController {
 
     @Autowired
     private RedisUtils redisUtils;
+
+    @Autowired
+    private KillService killService;
 
     @RequestMapping(value = "/hello/{id}")
     public String hello(@PathVariable(value = "id") String id) {
@@ -57,5 +62,10 @@ public class RedisController {
     @RequestMapping("expire")
     public boolean expire(String key) {
         return redisUtils.expire(key, 60);
+    }
+
+    @RequestMapping("kill")
+    public boolean kill(Long id, Integer num) throws InterruptedException {
+        return killService.killGoods(id, num);
     }
 }

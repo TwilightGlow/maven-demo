@@ -17,7 +17,7 @@ public interface RedisService {
      * @param key   key
      * @param value value
      * @param time  time
-     * @return
+     * @return boolean
      */
     boolean cacheValue(String key, String value, long time);
 
@@ -27,7 +27,7 @@ public interface RedisService {
      *
      * @param key   key
      * @param value value
-     * @return
+     * @return boolean
      */
     boolean cacheValue(String key, String value);
 
@@ -45,7 +45,7 @@ public interface RedisService {
      * 判断缓存 key:set集合 是否存在
      *
      * @param key key
-     * @return
+     * @return boolean
      */
     boolean containsSetKey(String key);
 
@@ -131,7 +131,7 @@ public interface RedisService {
      * @param k    key
      * @param v    value
      * @param time 时间
-     * @return
+     * @return boolean
      */
     boolean cacheSet(String k, Set<String> v, long time);
 
@@ -141,7 +141,7 @@ public interface RedisService {
      *
      * @param k key
      * @param v value
-     * @return
+     * @return return
      */
     boolean cacheSet(String k, Set<String> v);
 
@@ -191,7 +191,7 @@ public interface RedisService {
      * @param k    key
      * @param v    value
      * @param time 时间
-     * @return
+     * @return boolean
      */
     boolean cacheList(String k, List<String> v, long time);
 
@@ -240,7 +240,7 @@ public interface RedisService {
      * 根据 key 移除 list 缓存
      *
      * @param k key
-     * @return
+     * @return boolean
      */
     boolean removeOneOfList(String k);
 }

@@ -4,9 +4,9 @@ import com.example.service.RedisService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -18,7 +18,13 @@ public class RedisTest {
 
     //注入redisTemplate
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate1;
 
     @Autowired
     private RedisService redisService;
@@ -31,10 +37,10 @@ public class RedisTest {
     @Test
     public void setRedis() {
         //缓存中最常用的方法
-        redisTemplate.opsForValue().set("first","javen");
+        stringRedisTemplate.opsForValue().set("first","javen");
         //设置缓存过期时间为30   单位：秒　　　　
         //关于TimeUnit下面有部分源码截图
-        redisTemplate.opsForValue().set("second","sophia",30, TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set("second","sophia",30, TimeUnit.SECONDS);
         System.out.println("存入缓存成功");
     }
 
@@ -44,11 +50,13 @@ public class RedisTest {
      */
     @Test
     public void getRedis(){
-        String first = redisTemplate.opsForValue().get("first");
-        String second = redisTemplate.opsForValue().get("second");
+        String first = stringRedisTemplate.opsForValue().get("first");
+        String second = stringRedisTemplate.opsForValue().get("second");
+        Boolean ifAbsent = stringRedisTemplate.opsForValue().setIfAbsent("third", "3");
 
         System.out.println("取出缓存中first的数据是:"+first);
         System.out.println("取出缓存中second的数据是:"+second);
+        System.out.println(ifAbsent);
 
     }
 
@@ -59,7 +67,7 @@ public class RedisTest {
     @Test
     public void delRedis() {
         //根据key删除缓存
-        Boolean first = redisTemplate.delete("first");
+        Boolean first = stringRedisTemplate.delete("first");
 
         System.out.println("是否删除成功:"+first);
     }
@@ -73,5 +81,22 @@ public class RedisTest {
         System.out.println(redisService.getList("list", 0, 5));
 //        redisService.cacheList("list", "7");
         System.out.println(redisService.getOneFromList("list", 2));
+    }
+
+    @Test
+    @SuppressWarnings("unchecked")
+    // https://blog.csdn.net/notsaltedfish/article/details/75948281
+    public void testRedisGenerics() {
+        // RedisTemplate使用的是 JdkSerializationRedisSerializer序列化，适合对象类型数据
+        redisTemplate.opsForValue().set("first", "first");
+        // StringRedisTemplate使用的是 StringRedisSerializer序列化，适合字符串类型数据
+        redisTemplate1.opsForValue().set("second", "second");
+        stringRedisTemplate.opsForValue().set("third", "third");
+        System.out.println(redisTemplate.opsForValue().get("first"));
+        System.out.println(redisTemplate1.opsForValue().get("second"));
+        System.out.println(stringRedisTemplate.opsForValue().get("third"));
+        System.out.println(redisTemplate.delete("first"));
+        System.out.println(redisTemplate1.delete("second"));
+        System.out.println(stringRedisTemplate.delete("third"));
     }
 }
