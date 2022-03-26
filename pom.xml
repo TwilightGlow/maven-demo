@@ -22,6 +22,7 @@
         <module>spring-framework-demo</module>
         <module>spring-boot-demo</module>
         <module>spring-mail-demo</module>
+        <module>disruptor-demo</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -44,6 +45,25 @@
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.8.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
 <!--    <dependencies>-->
 <!--        <dependency>-->
 <!--            <groupId>org.apache.logging.log4j</groupId>-->
@@ -60,15 +80,21 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
-<!--                <configuration>-->
-<!--                    <source>17</source>-->
-<!--                    <target>17</target>-->
-<!--                    <fork>true</fork>-->
-<!--                </configuration>-->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.5.6</version>
             </plugin>
+
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <version>3.1</version>-->
+<!--&lt;!&ndash;                <configuration>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <source>17</source>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <target>17</target>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <fork>true</fork>&ndash;&gt;-->
+<!--&lt;!&ndash;                </configuration>&ndash;&gt;-->
+<!--            </plugin>-->
         </plugins>
     </build>
 
