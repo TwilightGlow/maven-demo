@@ -4,7 +4,7 @@ package com.example.factory.method;
  * @author Javen
  * @date 2022/2/2
  */
-public class FileLogger implements Logger{
+public class FileLogger implements Logger {
 
     public FileLogger() {
         System.out.println("Create a FileLogger with no arg");

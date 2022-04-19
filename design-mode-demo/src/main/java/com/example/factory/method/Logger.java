@@ -6,5 +6,5 @@ package com.example.factory.method;
  */
 public interface Logger {
 
-    public void writeLog();
+    void writeLog();
 }

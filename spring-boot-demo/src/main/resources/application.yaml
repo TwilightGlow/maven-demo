@@ -5,3 +5,45 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
+  profiles:
+    active: dev
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+schedule:
+  enable: true
+
+logging:
+  level:
+    root: debug
+    org.springframework: error
+    com.example: debug
+
+management:
+  endpoints:
+    enabled-by-default: true
+    jmx:
+      exposure:
+        include: "*"
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+#staff:
+#  id: 45056102
+#  department: HUB
+#  map:
+#    javen:
+#      age: 28
+#      sex: male
+
+hello:
+  prefix: Zhang
+  suffix: Jinwei
+
+id:
+  enable: true
+  machineId: 110

@@ -10,7 +10,7 @@ public class TemplatePatternTest {
 
     @Test
     public void test() {
-        AbstractParentImpl abstractParent = new AbstractParentImpl();
+        AbstractParent abstractParent = new AbstractParentImpl();
         abstractParent.templateMethod();
     }
 
@@ -19,7 +19,7 @@ public class TemplatePatternTest {
         String sql = "123456";
         AbstractJdbcTemplate abstractJdbcTemplate = new AbstractJdbcTemplateImpl();
         // 这里执行模板方法的是抽象类的引用，需要实现子类来完成业务逻辑
-        abstractJdbcTemplate.execute(sql);
+        System.out.println(abstractJdbcTemplate.execute(sql));
     }
 
     @Test
@@ -47,5 +47,4 @@ public class TemplatePatternTest {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.query(sql, new QueryStatementCallback());
     }
-
 }

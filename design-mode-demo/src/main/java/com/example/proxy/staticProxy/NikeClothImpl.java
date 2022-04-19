@@ -8,6 +8,6 @@ public class NikeClothImpl implements Cloth {
 
     @Override
     public void produceCloth() {
-        System.out.println("This is Nike produced cloth");
+        System.out.println("This is a Nike produced cloth");
     }
 }

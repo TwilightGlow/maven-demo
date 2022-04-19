@@ -7,5 +7,5 @@ package com.example.template;
 public interface JdbcOperations {
 
     // 查询
-    public Object query(String sql, StatementCallback action);
+    Object query(String sql, StatementCallback action);
 }

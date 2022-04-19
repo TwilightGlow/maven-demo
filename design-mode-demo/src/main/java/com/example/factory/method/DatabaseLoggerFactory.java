@@ -4,7 +4,7 @@ package com.example.factory.method;
  * @author Javen
  * @date 2022/2/2
  */
-public class DatabaseLoggerFactory implements LoggerFactory{
+public class DatabaseLoggerFactory implements LoggerFactory {
 
     @Override
     public DatabaseLogger createLogger() {

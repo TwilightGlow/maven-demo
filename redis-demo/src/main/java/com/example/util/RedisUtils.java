@@ -1,10 +1,14 @@
 package com.example.util;
 
+import com.example.model.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -19,6 +23,9 @@ public class RedisUtils {
     @Autowired
     private RedisTemplate redisTemplate;
 
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
     /**
      * 写入缓存
      *
@@ -29,8 +36,13 @@ public class RedisUtils {
     public boolean set(final String key, Object value) {
         boolean result = false;
         try {
-            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
-            operations.set(key, value);
+            if (value instanceof String) {
+                ValueOperations<String, String> opsForValue = stringRedisTemplate.opsForValue();
+                opsForValue.set(key, (String) value);
+            } else {
+                ValueOperations<String, Object> opsForValue = redisTemplate.opsForValue();
+                opsForValue.set(key, value);
+            }
             result = true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -227,5 +239,72 @@ public class RedisUtils {
     public Set<Object> rangeByScore(String key, double scoure, double scoure1) {
         ZSetOperations<String, Object> zset = redisTemplate.opsForZSet();
         return zset.rangeByScore(key, scoure, scoure1);
+    }
+
+    /**
+     * set Hash via Pipeline
+     */
+    public List<Boolean> setHashInPipeline(Collection<Teacher> teachers) {
+        List<Boolean> results = redisTemplate.executePipelined(new RedisCallback<Object>() {
+            @Override
+            public Object doInRedis(RedisConnection connection) throws DataAccessException {
+                ZSetOperations<String, Object> opsForZSet = redisTemplate.opsForZSet();
+                HashOperations<String, String, Object> opsForHash = redisTemplate.opsForHash();
+                teachers.forEach(teacher -> {
+                    opsForZSet.add("test:zset:789", teacher.getName(), teacher.getAge().doubleValue());
+                    opsForHash.put("test:hash:456", teacher.getName(), teacher);
+                });
+                return null;
+            }
+        });
+        return results;
+    }
+
+    /**
+     * get Hash via Pipeline
+     */
+    public List<Teacher> getHashInPipeline(List<String> names) {
+        List<Teacher> results = redisTemplate.executePipelined(new RedisCallback<Object>() {
+            @Override
+            public Object doInRedis(RedisConnection connection) throws DataAccessException {
+                names.forEach(name -> {
+                    connection.hGet("test:hash:456".getBytes(), name.getBytes());
+                });
+                return null;
+            }
+        });
+        return results;
+    }
+
+    /**
+     * get Zset via Pipeline
+     */
+    public List<Double> getZsetInPipeline(List<String> names) {
+        List<Double> results = redisTemplate.executePipelined(new RedisCallback<Object>() {
+            @Override
+            public Object doInRedis(RedisConnection connection) throws DataAccessException {
+                names.forEach(name -> {
+                    connection.hGet("test:zset:789".getBytes(), name.getBytes());
+                });
+                return null;
+            }
+        });
+        return results;
+    }
+
+    /**
+     * delete Hash via Pipeline
+     */
+    public List<Boolean> deleteHashInPipeline(List<String> names) {
+        List<Boolean> results = redisTemplate.executePipelined(new RedisCallback<Object>() {
+            @Override
+            public Object doInRedis(RedisConnection connection) throws DataAccessException {
+                names.forEach(name -> {
+                    connection.hDel("test:hash:456".getBytes(), name.getBytes());
+                });
+                return null;
+            }
+        });
+        return results;
     }
 }

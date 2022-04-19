@@ -1,13 +1,20 @@
 package com.example.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Javen
@@ -15,6 +22,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  */
 @Configuration
 public class RedisConfig{
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
 //    @Value("${spring.redis.host}")
 //    private String host;
@@ -44,8 +54,7 @@ public class RedisConfig{
 //
 //    @Bean
 //    public RedisConnectionFactory redisConnectionFactory() {
-//        RedisStandaloneConfiguration configuration = new RedisStandaloneConfiguration();
-//        configuration.setHostName(host);
+//        RedisStandaloneCome(host);
 //        configuration.setPort(port);
 //        configuration.setDatabase(0);
 //        configuration.setPassword(password);
@@ -69,17 +78,30 @@ public class RedisConfig{
         redisTemplate.setHashValueSerializer(new JdkSerializationRedisSerializer());
         return redisTemplate;
     }
-
-
+//
+//
     @Bean
     public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory factory) {
         StringRedisTemplate stringRedisTemplate = new StringRedisTemplate();
         stringRedisTemplate.setConnectionFactory(factory);
         return stringRedisTemplate;
     }
+//
 
     @Bean
-    public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
-        return RedisCacheManager.create(connectionFactory);
+    RedisCacheWriter writer() {
+        return RedisCacheWriter.nonLockingRedisCacheWriter(redisTemplate.getConnectionFactory());
+    }
+
+    @Bean
+    public RedisCacheManager cacheManager() {
+        Map<String, RedisCacheConfiguration> configurationMap = new HashMap<>();
+        configurationMap.put("id", RedisCacheConfiguration
+                .defaultCacheConfig().entryTtl(Duration.ofSeconds(10)));
+        return RedisCacheManager.builder(writer())
+                .initialCacheNames(configurationMap.keySet())
+                .withInitialCacheConfigurations(configurationMap)
+                .build();
+//        return RedisCacheManager.create(connectionFactory);
     }
 }

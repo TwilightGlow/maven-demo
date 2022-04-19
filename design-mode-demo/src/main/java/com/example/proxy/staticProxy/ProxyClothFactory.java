@@ -6,7 +6,7 @@ package com.example.proxy.staticProxy;
  */
 public class ProxyClothFactory implements Cloth {
 
-    private Cloth cloth;
+    private final Cloth cloth;
 
     public ProxyClothFactory(Cloth cloth) {
         this.cloth = cloth;

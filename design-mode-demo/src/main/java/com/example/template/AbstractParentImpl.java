@@ -9,7 +9,7 @@ public class AbstractParentImpl extends AbstractParent {
     @Override
     public void method2() {
         super.method2();
-        System.out.println("method2()在子类中覆盖了！！");
+        System.out.println("method2()在子类中扩展了！！");
     }
 
     @Override

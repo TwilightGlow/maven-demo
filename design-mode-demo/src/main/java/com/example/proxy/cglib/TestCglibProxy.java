@@ -31,7 +31,7 @@ public class TestCglibProxy {
         enhancer.setSuperclass(Teacher.class);
         enhancer.setCallback(new MethodInterceptor() {
             @Override
-            // o是代理对象，method是调用的方法，object是参数列表，methodProxy是可以调用原方法和增强方法
+            // o是代理对象不是被代理对象!! method是调用的方法，object是参数列表，methodProxy是可以调用原方法和增强方法
             public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
                 System.out.println("before");
                 method.setAccessible(true);
@@ -43,7 +43,7 @@ public class TestCglibProxy {
             }
         });
         Teacher teacher = (Teacher) enhancer.create();
-//        System.out.println(teacher.teach());
+        System.out.println(teacher.teach());
         try {
             Method test = Teacher.class.getDeclaredMethod("test");
             test.setAccessible(true);
@@ -76,7 +76,7 @@ public class TestCglibProxy {
         } catch (NoSuchMethodException e) {
             e.printStackTrace();
         }
-//        method.setAccessible(true);
+        method.setAccessible(true);
         Object invoke = method.invoke(teacher);
         System.out.println(invoke);
     }

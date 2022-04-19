@@ -12,7 +12,7 @@ import java.lang.reflect.Proxy;
  */
 public class TestJdkProxy {
 
-    // SKDProxy需要接口，需要传入对象，不需要无参构造器，生成该接口的实现类。
+    // SDKProxy需要接口，需要传入对象，不需要无参构造器，生成该接口的实现类。
     // 生成代理类的源码，SDKProxy生成的是实现类，CGLIB生成的是子类，
     public static void main(String[] args) {
         MyInterface proxy = (MyInterface) Proxy.newProxyInstance(TestJdkProxy.class.getClassLoader(), new Class[]{MyInterface.class}, new InvocationHandler() {
@@ -23,6 +23,7 @@ public class TestJdkProxy {
             // 第二次执行不需要生成MethodAccessor。但是执行另一方方法时，依然需要 methodAccessor。
             public Object invoke(Object proxy1, Method method, Object[] args1) throws Throwable {
                 System.out.println("Before...");
+                // 这里创建了MyInterface的匿名内部类
                 Object result = method.invoke((MyInterface) () -> "MyInterface", args1);
                 System.out.println("After...");
                 return result;

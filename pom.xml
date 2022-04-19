@@ -23,6 +23,7 @@
         <module>spring-boot-demo</module>
         <module>spring-mail-demo</module>
         <module>disruptor-demo</module>
+        <module>encryption-algorithm-demo</module>
     </modules>
 
     <packaging>pom</packaging>

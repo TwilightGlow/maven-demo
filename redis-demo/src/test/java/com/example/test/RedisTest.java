@@ -1,12 +1,16 @@
 package com.example.test;
 
+import com.example.model.Student;
 import com.example.service.RedisService;
+import com.example.util.RedisUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -29,6 +33,30 @@ public class RedisTest {
     @Autowired
     private RedisService redisService;
 
+    @Autowired
+    private RedisUtils redisUtils;
+
+    @Test
+    public void testList() {
+        List<Student> students = new ArrayList<>();
+        List<String> strings = new ArrayList<>();
+        strings.add("1");
+        strings.add("2");
+//        List<Friend> friends = new ArrayList<>();
+//        Friend friend = new Friend();
+//        friend.setName("111");
+//        friend.setAge(100);
+//        friends.add(friend);
+//        friends.add(friend);
+//        students.add(new Student("Javen", 28, strings, friends));
+//        students.add(new Student("Gallen", 26, strings, friends));
+        students.add(new Student());
+        System.out.println(redisUtils.set("myKey1", students));
+        System.out.println(redisUtils.set("myKey2", students));
+        List<Student> myKey1 = (List<Student>) redisUtils.get("myKey1");
+        System.out.println(myKey1);
+    }
+
     /**
      * 存入缓存键 key：value
      * 			first ：siwei
@@ -37,7 +65,7 @@ public class RedisTest {
     @Test
     public void setRedis() {
         //缓存中最常用的方法
-        stringRedisTemplate.opsForValue().set("first","javen");
+        stringRedisTemplate.opsForValue().set("first", "javen");
         //设置缓存过期时间为30   单位：秒　　　　
         //关于TimeUnit下面有部分源码截图
         stringRedisTemplate.opsForValue().set("second","sophia",30, TimeUnit.SECONDS);
@@ -95,8 +123,8 @@ public class RedisTest {
         System.out.println(redisTemplate.opsForValue().get("first"));
         System.out.println(redisTemplate1.opsForValue().get("second"));
         System.out.println(stringRedisTemplate.opsForValue().get("third"));
-        System.out.println(redisTemplate.delete("first"));
-        System.out.println(redisTemplate1.delete("second"));
-        System.out.println(stringRedisTemplate.delete("third"));
+//        System.out.println(redisTemplate.delete("first"));
+//        System.out.println(redisTemplate1.delete("second"));
+//        System.out.println(stringRedisTemplate.delete("third"));
     }
 }

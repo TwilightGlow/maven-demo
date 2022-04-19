@@ -8,13 +8,13 @@ public abstract class AbstractParent {
 
     //模板方法
     public final void templateMethod() {
-        method1();
+        method1();//父类方法
         method2();//勾子方法
         method3();//抽象方法
     }
 
     private void method1(){
-        System.out.println("父类实现业务逻辑");
+        System.out.println("父类原本的业务逻辑");
     }
 
     public void method2(){
