@@ -43,7 +43,7 @@ public class ReactorTest {
         Flux.range(1, 10)
                 .doOnSubscribe(r -> System.out.println("调用Publisher的doOnSubscribes(), subscribe of " + r))
                 .doOnRequest(r -> System.out.println("调用Publisher的doOnRequest(), request of " + r))
-                .subscribe(new BaseSubscriber<>() {
+                .subscribe(new BaseSubscriber<Integer>() {
                     @Override
                     protected void hookOnSubscribe(Subscription subscription) {
                         request(1);

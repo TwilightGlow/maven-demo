@@ -24,6 +24,7 @@
         <module>spring-mail-demo</module>
         <module>disruptor-demo</module>
         <module>encryption-algorithm-demo</module>
+        <module>elasticsearch-demo</module>
     </modules>
 
     <packaging>pom</packaging>
