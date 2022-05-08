@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.entity.BookEntity;
+import com.example.entity.Book;
 import com.example.entity.ESBook;
 import com.example.service.BookService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class BookController {
      * 添加book，这里我直接使用了Entity，为了演示有点不规范！
      */
     @PostMapping("/book")
-    public Map<String, String> addBook(@RequestBody BookEntity eSBook) {
+    public Map<String, String> addBook(@RequestBody Book eSBook) {
         bookService.addBook(eSBook);
         Map<String, String> map = new HashMap<>();
         map.put("msg", "ok");
@@ -45,7 +45,7 @@ public class BookController {
     }
 
     @GetMapping("/book/search/mysql")
-    public List<BookEntity> test(String key) {
+    public List<Book> searchMysql(String key) {
         return bookService.searchBookFromMysql(key);
     }
 }

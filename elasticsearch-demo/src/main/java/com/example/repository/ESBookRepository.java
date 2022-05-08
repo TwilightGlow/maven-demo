@@ -15,6 +15,8 @@ public interface ESBookRepository extends ElasticsearchRepository<ESBook, String
 
     List<ESBook> findByTitleOrAuthor(String title, String author);
 
+    List<ESBook> findByTitle(String title);
+
     @Highlight(fields = {
             @HighlightField(name = "title"),
             @HighlightField(name = "author")
