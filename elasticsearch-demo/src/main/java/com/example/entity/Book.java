@@ -4,20 +4,32 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-@Table(name = "book")
 @Getter
 @Setter
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
+
+    @Column(nullable = false, length = 200)
     private String title;
+
     private String author;
+
+    @Column(precision = 10, scale = 2, columnDefinition = "decimal(10, 2)")
     private Double price;
-    private Date createTime = new Date();
-    private Date updateTime = new Date();
+
+    @Column(precision = 10, scale = 2)
+    private BigDecimal money;
+
+    @Column(columnDefinition = "timestamp DEFAULT current_timestamp")
+    private Date createTime;
+
+    private Timestamp updateTime;
 }

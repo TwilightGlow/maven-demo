@@ -5,6 +5,8 @@ import com.example.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.client.RestClients;
+import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
@@ -24,7 +26,9 @@ import java.util.List;
 public class PostController {
 
     private final ElasticsearchRestTemplate elasticsearchRestTemplate;
-    
+
+    private final ElasticsearchOperations elasticsearchOperations;
+
     private final PostRepository postRepository;
 
     /**

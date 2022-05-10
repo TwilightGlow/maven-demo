@@ -15,10 +15,12 @@ public class Post {
     @Id
     private String id;
 
-    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+//    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+    @Field(type = FieldType.Text)
     private String title;
 
-    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+//    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+    @Field(type = FieldType.Text)
     private String content;
 
     private int userId;
