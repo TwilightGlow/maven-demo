@@ -1,8 +1,7 @@
 package com.example.test;
 
 import com.example.entity.Person;
-import com.example.repository.PersonRepository;
-import lombok.RequiredArgsConstructor;
+import com.example.repository.ESPersonRepository;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchAllQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -21,7 +20,6 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.core.query.UpdateQuery;
 import org.springframework.data.elasticsearch.core.query.UpdateResponse;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.CountDownLatch;
@@ -36,14 +34,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ApplicationMainTest {
 
     @Autowired
-    private PersonRepository personRepository;
+    private ESPersonRepository ESPersonRepository;
 
     @Autowired
     private ElasticsearchRestTemplate elasticsearchRestTemplate;
 
     @Test
     public void test() {
-        System.out.println(personRepository);
+        System.out.println(ESPersonRepository);
         System.out.println(elasticsearchRestTemplate);
     }
 
@@ -144,7 +142,7 @@ public class ApplicationMainTest {
         person.setTel("1111111");
         person.setCreateTime(new Date());
 
-        Person savePerson = personRepository.save(person);
+        Person savePerson = ESPersonRepository.save(person);
 
         System.out.println(savePerson);
     }
@@ -182,7 +180,7 @@ public class ApplicationMainTest {
         person3.setTel("3333333333");
         person3.setCreateTime(new Date());
         personList.add(person3);
-        personRepository.saveAll(personList);
+        ESPersonRepository.saveAll(personList);
     }
 
     @Test

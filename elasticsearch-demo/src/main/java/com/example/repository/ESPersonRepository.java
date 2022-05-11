@@ -7,5 +7,5 @@ import org.springframework.data.elasticsearch.repository.ElasticsearchRepository
  * @author Jinwei Zhang
  * @date 2022/5/7
  */
-public interface PersonRepository extends ElasticsearchRepository<Person,String> {
+public interface ESPersonRepository extends ElasticsearchRepository<Person,String> {
 }

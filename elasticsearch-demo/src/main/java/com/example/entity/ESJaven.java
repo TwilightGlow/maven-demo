@@ -9,18 +9,19 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.util.Date;
 
+/**
+ * @author Jinwei Zhang
+ */
 @Data
-@Document(indexName = "book",createIndex = true)
-public class ESBook {
+@Document(indexName = "javen", shards = 5, replicas = 1)
+public class ESJaven {
 
     @Id
     @Field(type = FieldType.Text)
     private String id;
-    @Field
-//    @Field(type = FieldType.Text, analyzer="ik_max_word")
+    @Field(type = FieldType.Text, analyzer="ik_max_word")
     private String title;
-    @Field
-//    @Field(type = FieldType.Text, analyzer="ik_max_word")
+    @Field(type = FieldType.Text, analyzer="ik_max_word")
     private String author;
     @Field(type = FieldType.Double)
     private Double price;

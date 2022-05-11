@@ -25,6 +25,7 @@
         <module>disruptor-demo</module>
         <module>encryption-algorithm-demo</module>
         <module>elasticsearch-demo</module>
+        <module>kafka-demo</module>
     </modules>
 
     <packaging>pom</packaging>

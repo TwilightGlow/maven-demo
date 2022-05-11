@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,9 +27,6 @@ public class BookController {
 
     private final BookRepository bookRepository;
 
-    /**
-     * 添加book，这里我直接使用了Entity，为了演示有点不规范！
-     */
     @PostMapping("/book")
     public Map<String, String> addBook(@RequestBody Book eSBook) {
         bookService.addBook(eSBook);
@@ -55,6 +53,32 @@ public class BookController {
         return bookService.searchBookFromMysql(key);
     }
 
+    @GetMapping("/book/search/mysql/async")
+    public List<Book> searchMysqlAsync(String key) throws ExecutionException, InterruptedException {
+        CompletableFuture<List<Book>> byAuthor = bookRepository.findByAuthor(key);
+        return byAuthor.get();
+    }
+
+    @GetMapping("/book/search/mysql/deleteByIdBatch")
+    public Boolean deleteByIdBatch() {
+        bookRepository.deleteAllByIdInBatch(Arrays.asList(1L, 2L));
+//        bookRepository.deleteAllById(Arrays.asList(1, 2));
+        return true;
+    }
+
+    @GetMapping("/book/search/mysql/save")
+    public Boolean saveAndFlush() {
+        Book book = new Book();
+        book.setId(1L);
+        book.setAuthor("kenny");
+        book.setMoney(new BigDecimal("123.45"));
+        book.setPrice(15.0);
+        book.setTitle("kenny");
+        book.setCreateTime(new Date());
+        bookRepository.saveAndFlush(book);
+        return true;
+    }
+
     @GetMapping("/bookPart")
     public BookPart searchBookPart() {
         BookPart bookPartById = bookRepository.findBookPartById(1L);
@@ -68,8 +92,8 @@ public class BookController {
     }
 
     @GetMapping("/bookJoin")
-    public String searchBookJoin() {
+    public String bookJoin() {
         BookTeacherProjection bookAndTeacher = bookRepository.findBookAndTeacher(1L);
-        return bookAndTeacher.getTitle() + " " + bookAndTeacher.getName();
+        return bookAndTeacher.getTitle();
     }
 }

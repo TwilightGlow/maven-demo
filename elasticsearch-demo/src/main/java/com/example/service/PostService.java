@@ -1,7 +1,7 @@
 package com.example.service;
 
 import com.example.entity.Post;
-import com.example.repository.PostRepository;
+import com.example.repository.ESPostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +17,12 @@ import java.util.List;
 public class PostService {
 
     @Autowired
-    PostRepository postRepository;
+    ESPostRepository ESPostRepository;
 
     @PostConstruct
     public void init() {
         //只初始化一次
-        Iterable<Post> posts = postRepository.findAll();
+        Iterable<Post> posts = ESPostRepository.findAll();
         if (posts.iterator().hasNext()) {
             return;
         }
@@ -32,7 +32,7 @@ public class PostService {
             post.setContent(getContent().get(i));
             post.setWeight(i);
             post.setUserId(i % 10);
-            postRepository.save(post);
+            ESPostRepository.save(post);
         }
     }
 

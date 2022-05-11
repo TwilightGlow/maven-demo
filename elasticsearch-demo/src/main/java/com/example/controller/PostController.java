@@ -1,20 +1,17 @@
 package com.example.controller;
 
 import com.example.entity.Post;
-import com.example.repository.PostRepository;
+import com.example.repository.ESPostRepository;
 import lombok.RequiredArgsConstructor;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.elasticsearch.client.RestClients;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +26,7 @@ public class PostController {
 
     private final ElasticsearchOperations elasticsearchOperations;
 
-    private final PostRepository postRepository;
+    private final ESPostRepository ESPostRepository;
 
     /**
      * 单字符串模糊查询，默认排序。将从所有字段中查找包含传来的word分词后字符串的数据集
@@ -37,6 +34,21 @@ public class PostController {
     @RequestMapping("/singleWord")
     public Iterable<Post> singleTitle(@PageableDefault Pageable pageable) {
         //使用queryStringQuery完成单字符串查询
-        return postRepository.findAll(pageable);
+        return ESPostRepository.findAll(pageable);
+    }
+
+    @GetMapping("/post/saveAll")
+    public String saveAll() {
+        List<Post> posts = new ArrayList<>();
+        Post post = new Post();
+        post.setId("abcde");
+        post.setContent("456");
+        posts.add(post);
+        posts.add(post);
+        posts.add(post);
+        posts.add(post);
+        posts.add(post);
+        ESPostRepository.saveAll(posts);
+        return "1";
     }
 }
