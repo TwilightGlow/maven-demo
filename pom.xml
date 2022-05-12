@@ -26,6 +26,10 @@
         <module>encryption-algorithm-demo</module>
         <module>elasticsearch-demo</module>
         <module>kafka-demo</module>
+        <module>spi-provider</module>
+        <module>spi-operate-add</module>
+        <module>spi-consumer</module>
+        <module>spi-operate-multiple</module>
     </modules>
 
     <packaging>pom</packaging>
