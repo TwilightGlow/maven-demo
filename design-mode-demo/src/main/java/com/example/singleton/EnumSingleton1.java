@@ -29,4 +29,15 @@ public enum EnumSingleton1 {
     public void setName(String name) {
         this.name = name;
     }
+
+    public static void main(String[] args) {
+        EnumSingleton1 singleton = Enum.valueOf(EnumSingleton1.class, "SINGLETON");
+        System.out.println(singleton);
+        for (EnumSingleton1 value : EnumSingleton1.values()) {
+            System.out.println(value);
+        }
+        for (EnumSingleton1 enumConstant : EnumSingleton1.class.getEnumConstants()) {
+            System.out.println(enumConstant);
+        }
+    }
 }

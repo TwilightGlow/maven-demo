@@ -1,5 +1,6 @@
 package com.example.consumer;
 
+import com.example.model.Foo2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -8,9 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Jinwei Zhang
@@ -24,7 +22,12 @@ public class KafkaHandler {
 
     @KafkaListener(id = "myConsumer", topics = "test")
     public void receiveHandle(String record) {
-        System.out.println("收到请求： " + record);
+        System.out.println("收到String请求： " + record);
+    }
+
+    @KafkaListener(id = "fooConsumer", topics = "test")
+    public void receiveHandle(Foo2 foo) {
+        System.out.println("收到Foo请求： " + foo);
     }
 
     @KafkaListener(id = "myConsumer1", topics = "batch")

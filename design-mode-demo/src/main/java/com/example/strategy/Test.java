@@ -21,7 +21,8 @@ public class Test {
         System.out.println("C策略价格：" + myContext.getPrice());
 
         System.out.println("具体策略类的类名存储在配置文件中，通过工具类XMLUtil来读取配置文件并反射生成对象");
-        myContext.setDiscount((ConcreteStrategyBImpl) XmlUtil.getBean());
+//        myContext.setDiscount((ConcreteStrategyBImpl) XmlUtil.getBean());
+        myContext.setDiscount((IStrategy) XmlUtil.getBean());
         System.out.println("B策略价格：" + myContext.getPrice());
     }
 }

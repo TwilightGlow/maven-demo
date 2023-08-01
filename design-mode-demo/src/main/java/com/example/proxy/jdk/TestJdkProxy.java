@@ -14,6 +14,9 @@ public class TestJdkProxy {
 
     // SDKProxy需要接口，需要传入对象，不需要无参构造器，生成该接口的实现类。
     // 生成代理类的源码，SDKProxy生成的是实现类，CGLIB生成的是子类，
+    // JDK 动态代理只能针对接口实现类生成代理实例，而不能针对类；也就是说它是面向接口的
+    // CGLIB 是针对类实现代理，主要是对指定的类生成一个子类，并覆盖其中方法实现增强，
+    // 但是因为采用的是继承，所以该类或方法最好不要声明成 final，对于 final 类或方法，是无法继承的
     public static void main(String[] args) {
         MyInterface proxy = (MyInterface) Proxy.newProxyInstance(TestJdkProxy.class.getClassLoader(), new Class[]{MyInterface.class}, new InvocationHandler() {
             @Override

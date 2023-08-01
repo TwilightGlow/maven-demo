@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Teacher {
+public class Teacher implements TestInterface {
 
     private String name;
 
@@ -24,4 +24,5 @@ public class Teacher {
         System.out.println("Test");
         return "This is a private method";
     }
+
 }

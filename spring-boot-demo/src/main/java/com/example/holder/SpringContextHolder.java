@@ -22,4 +22,19 @@ public class SpringContextHolder implements ApplicationContextAware {
     public void setApplicationContext(ApplicationContext appContext) throws BeansException {
         applicationContext = appContext;
     }
+
+    public static <T> T popBean(Class<T> clazz) {
+        //先判断是否为空
+        if (applicationContext == null) {
+            return null;
+        }
+        return applicationContext.getBean(clazz);
+    }
+
+    public static <T> T popBean(String name, Class<T> clazz) {
+        if (applicationContext == null) {
+            return null;
+        }
+        return applicationContext.getBean(name, clazz);
+    }
 }
