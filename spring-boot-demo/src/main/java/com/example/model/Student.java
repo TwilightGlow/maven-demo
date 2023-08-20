@@ -1,12 +1,16 @@
 package com.example.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  * @author Javen
  * @date 2022/2/12
  */
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Student {

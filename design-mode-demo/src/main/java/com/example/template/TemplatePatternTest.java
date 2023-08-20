@@ -25,7 +25,7 @@ public class TemplatePatternTest {
     @Test
     public void testJdbcTemplateCallBack() {
         String sql = "123456";
-        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        JdbcOperations jdbcTemplate = new JdbcTemplate();
         jdbcTemplate.query(sql, new StatementCallback() {
             @Override
             public String[] doInStatement(String stmt) {
