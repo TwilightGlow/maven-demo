@@ -30,6 +30,7 @@
         <module>spi-operate-add</module>
         <module>spi-consumer</module>
         <module>spi-operate-multiple</module>
+        <module>spring-security-demo</module>
     </modules>
 
     <packaging>pom</packaging>
