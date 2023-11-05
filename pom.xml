@@ -42,6 +42,7 @@
     </properties>
 
     <dependencyManagement>
+        <!--要用到<scope>import</scope>这个必须要声明<type>pom</type>-->
         <dependencies>
             <dependency>
                 <groupId>io.projectreactor</groupId>

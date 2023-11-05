@@ -14,13 +14,10 @@ public class TestUnSafe {
 
     public static void main(String[] args) throws InterruptedException {
         for (int j = 0; j < 10000; j++) {
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    for (int k = 0; k < 100; k++) {
-                        i++;
-                        atomicInteger.incrementAndGet();
-                    }
+            new Thread(() -> {
+                for (int k = 0; k < 100; k++) {
+                    i++;
+                    atomicInteger.incrementAndGet();
                 }
             }).start();
         }

@@ -7,17 +7,14 @@ package com.example.thread;
 public class TestSelfSpin {
 
     public static void main(String[] args) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println(Thread.activeCount());
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(Thread.currentThread().getName() + " end...");
+        new Thread(() -> {
+            System.out.println(Thread.activeCount());
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+            System.out.println(Thread.currentThread().getName() + " end...");
         }).start();
 
         // 这里为自旋，引起CPU空转造成性能浪费

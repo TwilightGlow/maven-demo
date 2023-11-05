@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  */
 public class TestSemaphore {
 
-    private static final Semaphore semaphore = new Semaphore(3);
+    private static final Semaphore semaphore = new Semaphore(1);
 
     public static void main(String[] args) throws InterruptedException {
         ExecutorService pool = Executors.newFixedThreadPool(6);

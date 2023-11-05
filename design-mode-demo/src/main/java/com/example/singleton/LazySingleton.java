@@ -1,5 +1,6 @@
 package com.example.singleton;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -29,6 +30,7 @@ public class LazySingleton implements Serializable {
     // 解决反序列化创建问题
     // 若类中定义一个readResolve方法，其返回值将会替代之前创建的新对象，一次保证了反序列化后仍然是原来的对象。
     // 但是与枚举实现相比，还是枚举实现具有更高的优先级
+    @Serial
     private Object readResolve() {
         return getInstance();
     }
