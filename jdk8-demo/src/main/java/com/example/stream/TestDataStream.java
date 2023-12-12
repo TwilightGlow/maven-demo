@@ -3,6 +3,8 @@ package com.example.stream;
 import org.junit.Test;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * @author Javen
@@ -14,7 +16,7 @@ public class TestDataStream {
     // DataStream是为了方便操作基本数据类型和String类型
     // DataInputStream可以从字节流中直接转换出具体的数据类型，DataOutputStream可以将各种类型的数据在内部转成byte字节然后利用FileOutputStream写入文件中
     public void testDataStream() throws IOException {
-        try (DataOutputStream dataOutputStream = new DataOutputStream(new FileOutputStream("src/main/java/com/example/stream/data-stream.txt"));
+        try (DataOutputStream dataOutputStream = new DataOutputStream(Files.newOutputStream(Paths.get("src/main/java/com/example/stream/data-stream.txt")));
              DataInputStream dataInputStream = new DataInputStream(new FileInputStream("src/main/java/com/example/stream/data-stream.txt"))) {
             dataOutputStream.writeUTF("张津玮1");
             dataOutputStream.writeUTF("张津玮2");

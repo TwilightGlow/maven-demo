@@ -31,6 +31,7 @@ public class TestStream {
     @Test
     // 对于非文本类文件，用字节流处理 (InputStream <---> OutputStream)
     // 字节流在操作时本身不会用到缓存区
+    // 这里IO流使用了装饰模式和适配器模式
     public void testInputOutputStream() throws IOException {
         try (FileInputStream fileInputStream = new FileInputStream("src/main/java/com/example/stream/picture.jpg");
              FileOutputStream fileOutputStream = new FileOutputStream("src/main/java/com/example/stream/picture1.jpg")) {
