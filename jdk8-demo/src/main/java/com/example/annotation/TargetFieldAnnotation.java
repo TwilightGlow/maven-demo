@@ -3,14 +3,12 @@ package com.example.annotation;
 import java.lang.annotation.*;
 
 /**
- * @author Javen
- * @date 2022/4/18
+ * @author zhangjw54
  */
-@Target(ElementType.TYPE_USE)
+@Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
-@Repeatable(TestAnnotations.class)
 @Documented
-public @interface TestAnnotation {
+public @interface TargetFieldAnnotation {
 
     String value() default "Kenny";
 }

@@ -8,8 +8,9 @@ import java.lang.annotation.*;
  */
 @Target(ElementType.TYPE_USE)
 @Retention(RetentionPolicy.RUNTIME)
+@Repeatable(TargetTypeUseAnnotations.class)
 @Documented
-public @interface TestAnnotations {
+public @interface TargetTypeUseAnnotation {
 
-    TestAnnotation[] value();
+    String value() default "Kenny";
 }

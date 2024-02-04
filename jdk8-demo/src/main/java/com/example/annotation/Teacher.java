@@ -9,17 +9,23 @@ import java.util.List;
  * @date 2022/4/18
  */
 @Data
-@TestAnnotation(value = "类")
-public class Teacher<@TestAnnotation @TypeParaAnnotation T> {
+@TargetTypeUseAnnotation(value = "类")
+public class Teacher<@TargetTypeUseAnnotation @TargetTypeParameterAnnotation T> {
 
-    @TestAnnotation(value = "成员变量1")
-    @TestAnnotation(value = "成员变量2")
+    @TargetTypeUseAnnotation(value = "成员变量1")
+    @TargetTypeUseAnnotation(value = "成员变量2")
     public String name;
 
     public List<T> hobbies;
 
-//    @TestAnnotation(value = "Gallen")
-    public @TestAnnotation(value = "方法返回值") String teach(@TestAnnotation(value = "方法形参") int num) {
+    // @TargetTypeUseAnnotation(value = "方法上")
+    public @TargetTypeUseAnnotation(value = "方法返回值") String teach(@TargetTypeUseAnnotation(value = "方法形参") int num) {
+        System.out.println("This is teach method");
+        return String.valueOf(num);
+    }
+
+    @TargetTypeUseAnnotation(value = "方法上")
+    public @TargetTypeUseAnnotation(value = "方法返回值") String repeat(@TargetTypeUseAnnotation(value = "方法形参") int num) {
         System.out.println("This is teach method");
         return String.valueOf(num);
     }

@@ -12,12 +12,12 @@ import java.util.Map;
 public class Transaction {
 
     public void a() {
-        System.out.println("method a");
+        System.out.println("method a" + " : " + getClass());
         b();
     }
 
     public void b() {
-        System.out.println("method b");
+        System.out.println("method b" + " : " + getClass());
     }
 
 }
@@ -65,5 +65,46 @@ class Test {
         transaction1.a();
 
         // 第一种是组合模式，第二种是继承模式
+    }
+}
+
+class ProxyTest {
+
+    static class ExtendProxy extends Transaction {
+        @Override
+        public void a() {
+            super.a();
+        }
+        @Override
+        public void b() {
+            System.out.println("b方法执行了事务");
+            super.b();
+        }
+    }
+    static class CompositeProxy extends Transaction {
+
+        private final Transaction target;
+
+        CompositeProxy(Transaction target) {
+            this.target = target;
+        }
+        @Override
+        public void a() {
+            target.a();
+        }
+        @Override
+        public void b() {
+            System.out.println("b方法执行了书屋");
+            target.b();
+        }
+    }
+
+    public static void main(String[] args) {
+        Transaction target = new Transaction();
+        // 组合模式
+        new CompositeProxy(target).a();
+        System.out.println("----------------------");
+        // 继承模式
+        new ExtendProxy().a();
     }
 }

@@ -48,7 +48,7 @@ public class RsaServiceImpl implements RsaService {
         // 先RSA加密，再Base64加密
         byte[] bytes = cipher.doFinal(decryptedString.getBytes(StandardCharsets.UTF_8));
         String encryptedString = new String(Base64.getEncoder().encode(bytes), StandardCharsets.UTF_8);
-        HashMap<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("encryptedString", encryptedString);
         return map;
     }
@@ -63,8 +63,39 @@ public class RsaServiceImpl implements RsaService {
         // 先Base64解密，在RSA解密
         byte[] bytes = cipher.doFinal(Base64.getDecoder().decode(encryptedString.getBytes(StandardCharsets.UTF_8)));
         String decryptedString = new String(bytes, StandardCharsets.UTF_8);
-        HashMap<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("decryptedString", decryptedString);
         return map;
     }
+
+    @Override
+    public Map<String, Object> sign(String privateKeyString, String message) throws Exception {
+        PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKeyString));
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
+        Signature signature = Signature.getInstance("SHA256withRSA");
+        signature.initSign(privateKey);
+        signature.update(message.getBytes());
+        byte[] signatureBytes = signature.sign();
+        String signMessage = Base64.getEncoder().encodeToString(signatureBytes);
+        Map<String, Object> map = new HashMap<>();
+        map.put("signMessage", signMessage);
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> verifySignature(String publicKeyString, String message, String signature) throws Exception {
+        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(Base64.getDecoder().decode(publicKeyString));
+        KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+        PublicKey publicKey = keyFactory.generatePublic(keySpec);
+        Signature verifier = Signature.getInstance("SHA256withRSA");
+        verifier.initVerify(publicKey);
+        verifier.update(message.getBytes());
+        byte[] signatureBytes = Base64.getDecoder().decode(signature);
+        boolean result = verifier.verify(signatureBytes);
+        Map<String, Object> map = new HashMap<>();
+        map.put("result", result);
+        return map;
+    }
+
 }
