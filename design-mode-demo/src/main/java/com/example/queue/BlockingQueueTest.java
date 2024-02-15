@@ -10,7 +10,7 @@ public class BlockingQueueTest {
 
     // Blocking Queue生产者和消费者是根据队列长度阻塞
 //    static LinkedBlockingQueue<String> blockingQueue = new LinkedBlockingQueue<>();
-    static LinkedBlockingQueue<String> blockingQueue = new LinkedBlockingQueue<>(3);
+    private static final LinkedBlockingQueue<String> blockingQueue = new LinkedBlockingQueue<>(3);
 
     public static void main(String[] args) {
         ExecutorService exService = Executors.newFixedThreadPool(2);
@@ -42,7 +42,7 @@ public class BlockingQueueTest {
         public void run() {
             for (int i = 0; i < 5; i++) {
                 try {
-                    TimeUnit.SECONDS.sleep(2);
+                    TimeUnit.SECONDS.sleep(5);
                     System.out.println("Consumer is waiting to take element...");
                     String take = blockingQueue.take();
                     System.out.println("Consumer received Element: " + take);

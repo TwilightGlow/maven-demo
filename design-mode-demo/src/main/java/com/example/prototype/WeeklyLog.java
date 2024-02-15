@@ -50,9 +50,12 @@ public class WeeklyLog implements Cloneable, Serializable {
         ByteArrayOutputStream bao = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(bao);
         oos.writeObject(this);
+        oos.close();
         //将对象从流中取出
         ByteArrayInputStream bis = new ByteArrayInputStream(bao.toByteArray());
         ObjectInputStream ois = new ObjectInputStream(bis);
-        return (WeeklyLog) ois.readObject();
+        WeeklyLog weeklyLog = (WeeklyLog) ois.readObject();
+        ois.close();
+        return weeklyLog;
     }
 }

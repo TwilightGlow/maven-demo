@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ThreadTest {
 
     // 在notify()方法后，当前线程不会马上释放该对象锁，要等到执行notify()方法的线程将程序执行完，也就是退出同步代码块之后才会释放对象锁
+    // 在wait()方法后会释放锁，在当前行等待直到被唤醒
     public static void main(String[] args) {
         Object lock = new Object();
         AtomicInteger integer = new AtomicInteger();
@@ -99,11 +100,11 @@ public class ThreadTest {
             }
         }).start();
 
-        try {
-            Thread.currentThread().join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        // try {
+        //     Thread.currentThread().join();
+        // } catch (InterruptedException e) {
+        //     throw new RuntimeException(e);
+        // }
 
     }
 }

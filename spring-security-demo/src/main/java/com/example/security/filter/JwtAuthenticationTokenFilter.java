@@ -15,6 +15,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -55,12 +58,14 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
                 //                .password("$2a$10$FkYplqaAYWGN.VuOjfoyQ.QhsgGOV9olwM/Eom.OMZQALXyNcskSq")
                 .password("$2a$10$YSUIUaFdwzgBjKn5xdFy1eniKFW9AcqUtWDH5Gxz93UEdltDmFVC2")
                 .status("启用").build();
+        List<String> authList = new ArrayList<>(Arrays.asList("ROLE_test", "ROLE_test1", "ROLE_test2"));
         LoginUser loginUser = new LoginUser();
         loginUser.setUser(user);
+        loginUser.setPermissions(authList);
         //存入SecurityContextHolder
-        //TODO 获取权限信息封装到Authentication中
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginUser,null,null);
+                new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
+        // 这行十分重要，后面需要用到authenticationToken中的密码进行校验
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         //放行
         filterChain.doFilter(request, response);

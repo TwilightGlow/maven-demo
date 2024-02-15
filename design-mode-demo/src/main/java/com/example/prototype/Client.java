@@ -29,11 +29,12 @@ public class Client {
         System.out.println("****周报****" + log_new.hashCode());
         System.out.println("****附件****" + log_new.getAttachment().hashCode());
         System.out.println(log_new.getAttachment() == log_previous.getAttachment());
-        log_new.getAttachment().setName("附件浅浅克隆");
+        log_new.getAttachment().setName("附件浅克隆");
         System.out.println("周次：" + log_new.getDate());
         System.out.println("姓名：" + log_new.getName());
         System.out.println("内容：" + log_new.getContent());
         System.out.println("附件：" + log_new.getAttachment());
+        System.out.println("--------------------------------");
 
         // @Data修饰后，clone的对象和原来的对象具有相同的hashcode https://blog.csdn.net/weixin_47025878/article/details/129101631
         // 但是其地址已经不同了
