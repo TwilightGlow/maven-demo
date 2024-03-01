@@ -62,7 +62,8 @@ public class TestCglibProxy {
 
     @Test
     public void test() throws InvocationTargetException, IllegalAccessException {
-        Object o = Proxy.newProxyInstance(TestCglibProxy.class.getClassLoader(), new Class[]{MyInterface.class}, new InvocationHandler() {
+        Object o = Proxy.newProxyInstance(TestCglibProxy.class.getClassLoader(),
+                new Class[]{MyInterface.class}, new InvocationHandler() {
             @Override
             public Object invoke(Object o, Method method, Object[] objects) throws Throwable {
                 System.out.println("before");
