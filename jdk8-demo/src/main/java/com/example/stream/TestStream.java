@@ -28,6 +28,20 @@ public class TestStream {
         }
     }
 
+    // 在程序运行中File读取的是项目根目录的相对路径，或者绝对路径（Path from Repository Root / Absolute Path）
+    // 如果使用@Test注解那File读取的是内容的相对路径（Path from Content Root）
+    public static void main(String[] args) throws IOException {
+        try (FileReader fileReader = new FileReader("jdk8-demo/src/main/java/com/example/stream/hello.txt");
+             // FileWriter fileWriter = new FileWriter("C:\\Users\\Jinwei Zhang\\IdeaProjects\\maven-demo\\jdk8-demo\\src\\main\\java\\com\\example\\stream\\hello1.txt")) {
+             FileWriter fileWriter = new FileWriter("C:/Users/Jinwei Zhang/IdeaProjects/maven-demo/jdk8-demo/src/main/java/com/example/stream/hello1.txt")) {
+            char[] chars = new char[5];
+            int len;
+            while ((len = fileReader.read(chars)) != -1) {
+                fileWriter.write(chars, 0, len);
+            }
+        }
+    }
+
     @Test
     // 对于非文本类文件，用字节流处理 (InputStream <---> OutputStream)
     // 字节流在操作时本身不会用到缓存区
