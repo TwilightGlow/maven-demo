@@ -1,19 +1,19 @@
-//package com.example;
+// package com.example;
 //
-//import org.springframework.stereotype.Component;
-//import org.springframework.web.WebApplicationInitializer;
-//import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-//import org.springframework.web.servlet.DispatcherServlet;
+// import org.springframework.stereotype.Component;
+// import org.springframework.web.WebApplicationInitializer;
+// import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+// import org.springframework.web.servlet.DispatcherServlet;
 //
-//import javax.servlet.ServletContext;
-//import javax.servlet.ServletRegistration;
+// import javax.servlet.ServletContext;
+// import javax.servlet.ServletRegistration;
 //
-///**
+// /**
 // * @author Javen
 // * @date 2022/2/16
 // */
-//@Component
-//public class MyWebApplicationInitializer implements WebApplicationInitializer {
+// @Component
+// public class MyWebApplicationInitializer implements WebApplicationInitializer {
 //
 //    @Override
 //    public void onStartup(ServletContext servletContext) {
@@ -28,4 +28,4 @@
 //        registration.setLoadOnStartup(1);
 //        registration.addMapping("/app/*");
 //    }
-//}
+// }

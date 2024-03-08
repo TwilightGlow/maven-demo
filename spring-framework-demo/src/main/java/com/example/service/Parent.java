@@ -1,18 +1,14 @@
 package com.example.service;
 
+import lombok.Data;
+
 /**
  * @author Javen
  * @date 2022/3/3
  */
+@Data
 public class Parent {
 
     private String name;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
