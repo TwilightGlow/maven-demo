@@ -29,4 +29,21 @@ public class ParseContextTest {
         log.info("valueType -> {}", expression.getValueType());
         log.info("valueTypeDescriptor -> {}", expression.getValueTypeDescriptor());
     }
+
+    @Test
+    void parseContextStr() {
+        ParserContext parserContext = new TemplateParserContext("#{", "}");
+        Expression expression = PARSER.parseExpression("Hello World", ParserContext.TEMPLATE_EXPRESSION);
+        log.info("value -> {}", Objects.requireNonNull(expression.getValue()));
+        log.info("expressionString -> {}", expression.getExpressionString());
+        log.info("valueType -> {}", expression.getValueType());
+        log.info("valueTypeDescriptor -> {}", expression.getValueTypeDescriptor());
+    }
+
+    @Test
+    void parseProgram() {
+        ParserContext parserContext = new TemplateParserContext("#{", "}");
+        Expression expression = PARSER.parseExpression("#{T(System).out.println('Hello!!!!!!!!')} ; #{T(System).out.println('World!!!{}!!!!!')}", parserContext);
+        expression.getValue();
+    }
 }

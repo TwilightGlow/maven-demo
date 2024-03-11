@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="parent" class="com.example.bean.Parent">
+        <property name="name" value="Javen"/>
+        <property name="age" value="30"/>
+        <property name="student" ref="student1"/>
+    </bean>
+
+    <bean id="student" class="com.example.bean.Student" parent="parent">
+        <property name="name" value="xiaohei"/>
+        <property name="age" value="19"/>
+        <property name="grade" value="99"/>
+    </bean>
+
+    <import resource="spring-import-beans.xml"/>
+
+</beans>

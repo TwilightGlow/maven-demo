@@ -1,4 +1,4 @@
-package com.example.service;
+package com.example.bean;
 
 import lombok.Data;
 
@@ -10,5 +10,6 @@ import lombok.Data;
 public class Parent {
 
     private String name;
-
+    private Integer age;
+    private Student student;
 }

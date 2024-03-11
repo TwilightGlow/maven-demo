@@ -27,7 +27,7 @@ public class SpelExpressionParserTest {
 
     private static final ExpressionParser PARSER = new SpelExpressionParser();
 
-    // 直接解析字符串需要加''
+    // 直接解析字符串需要加''，不写引号会报错因为ParseContext为空PARSER默认会直接解析，参考ParseContextTest#parseContextStr
     @Test
     void normalString() {
         Expression helloWorld = PARSER.parseExpression("'Hello World'");

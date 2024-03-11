@@ -1,7 +1,7 @@
 package com.example;
 
 import com.example.controller.JavenController;
-import com.example.service.Parent;
+import com.example.bean.Parent;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
