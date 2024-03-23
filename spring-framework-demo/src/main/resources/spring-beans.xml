@@ -7,7 +7,7 @@
     <bean id="parent" class="com.example.bean.Parent">
         <property name="name" value="Javen"/>
         <property name="age" value="30"/>
-        <property name="student" ref="student1"/>
+        <property name="student" ref="student2"/>
     </bean>
 
     <bean id="student" class="com.example.bean.Student" parent="parent">
@@ -16,6 +16,7 @@
         <property name="grade" value="99"/>
     </bean>
 
+<!--    相当于@Import-->
     <import resource="spring-import-beans.xml"/>
 
 </beans>

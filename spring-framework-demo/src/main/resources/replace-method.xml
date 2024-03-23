@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="phone" class="com.example.bean.Phone">
+        <replaced-method name="call" replacer="phoneReplace">
+            <arg-type>java.lang.String</arg-type>
+        </replaced-method>
+    </bean>
+
+    <!-- ====================replace-method属性注入==================== -->
+    <bean id="phoneReplace" class="com.example.bean.PhoneReplace"/>
+
+</beans>

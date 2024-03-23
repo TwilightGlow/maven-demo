@@ -4,6 +4,7 @@ import com.example.bean.Parent;
 import com.example.bean.Student;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -42,5 +43,16 @@ public class ContainerTest {
         log.info("Student1 Bean属性：{}", student1);
         Student student2 = (Student) context.getBean("student2");
         log.info("Student2 Bean属性：{}", student2);
+    }
+
+    @Test
+    public void hierarchicalBeanFactory() {
+        DefaultListableBeanFactory parent = new DefaultListableBeanFactory();
+        parent.registerSingleton("parent", new Parent());
+        DefaultListableBeanFactory child = new DefaultListableBeanFactory();
+        child.setParentBeanFactory(parent);
+        log.info("child.containsLocalBean -> {}", child.containsLocalBean("parent"));
+        log.info("child.containsBean -> {}", child.containsBean("parent"));
+        log.info("child.getBean -> {}", child.getBean("parent"));
     }
 }
