@@ -9,6 +9,7 @@ import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
+import org.springframework.context.support.GenericXmlApplicationContext;
 
 /**
  * @author zhangjw54
@@ -18,7 +19,18 @@ public class ContainerTest {
 
     @Test
     public void classPathXmlApplicationContext() {
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring-beans.xml");
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext();
+        context.setConfigLocation("spring-beans.xml");
+        context.refresh();
+        Parent parent = (Parent) context.getBean("parent");
+        log.info("Bean属性：{}", parent);
+    }
+
+    @Test
+    public void genericXmlApplicationContext() {
+        GenericXmlApplicationContext context = new GenericXmlApplicationContext();
+        context.load("spring-beans.xml");
+        context.refresh();
         Parent parent = (Parent) context.getBean("parent");
         log.info("Bean属性：{}", parent);
     }
