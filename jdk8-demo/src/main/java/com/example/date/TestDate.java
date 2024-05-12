@@ -85,8 +85,10 @@ public class TestDate {
     }
 
     @Test
-    // Instant 代表时刻(moment)，时间线中的特定点。一般适合替换传统的“java.util.Date"和“java.sql.Timestamp"，用来表示时间戳记。
+    // Instant 代表时刻(moment)，时间线中的特定点，它是时区无关的。一般适合替换传统的“java.util.Date"和“java.sql.Timestamp"，用来表示时间戳记。
     // LocalDateTime 表示日期和时间(默认是本地)，因为不具备时区和UTC偏移的概念，所以无法代表一个特定的时刻，通常被视为年月日和小时分钟秒。一般可以描述像生日的日期，以及在墙上时钟上看到的本地时间。
+    // LocalDateTime 表示没有时区信息的日期和时间，它不能直接转换为时间戳，除非你将其与时区结合使用（例如通过 ZonedDateTime）。
+    // ZonedDateTime 包含时区信息的日期和时间，它更类似于 Calendar，因为 Calendar 也包含时区信息。
     public void testInstant() {
         // Instant时区默认UTC 2023-12-12T14:32:23.565689800Z
         //  结果的Z表示ZoneOffset.UTC（可以进入ZoneID类的318行开始查看：JDK1.8）
@@ -95,5 +97,7 @@ public class TestDate {
         LocalDateTime localDateTime = instant.atZone(ZoneId.systemDefault()).toLocalDateTime();
         System.out.println(instant);
         System.out.println(localDateTime);
+        System.out.println(LocalDateTime.now());
+        System.out.println(ZonedDateTime.now());
     }
 }
