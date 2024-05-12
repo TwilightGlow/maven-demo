@@ -28,7 +28,25 @@ public class Hamburger {
     @Test
     public void recursiveMethod() {
         Arrays.fill(cache, -2);
-        System.out.println(recursive(4, 9, 54));
+        System.out.println(recursive(4, 9, 78));
+    }
+
+    // 使用动态规划的方式，空间复杂度更低
+    private final int[] burgers = {4, 9};
+    private int totalTime = 78;
+    @Test
+    public void dp() {
+        int[] dp = new int[totalTime + 1];
+        Arrays.fill(dp, -1);
+        dp[0] = 0;
+        for (int i = 1; i <= totalTime; i++) {
+            for (int burger : burgers) {
+                if (burger <= i && dp[i - burger] != -1) {
+                    dp[i] = Math.max(dp[i], dp[i - burger] + 1);
+                }
+            }
+        }
+        System.out.println(dp[totalTime]);
     }
 
     private int recursive(int m, int n, int t) {

@@ -21,12 +21,12 @@ public class PriorityQueueTest {
         priorityQueue.offer(5);
         priorityQueue.offer(4);
         // 堆排序只能保证根节点的元素是最小的，如果遍历的话并不能保证有序性
-        System.out.println("使用for循环遍历");
+        System.out.print("使用for循环遍历: ");
         for (Integer i : priorityQueue) {
             System.out.print(i);
         }
         Iterator<Integer> iterator = priorityQueue.iterator();
-        System.out.println("\n使用iterator遍历");
+        System.out.print("\n使用iterator遍历: ");
         while (iterator.hasNext()) {
             System.out.print(iterator.next());
         }
