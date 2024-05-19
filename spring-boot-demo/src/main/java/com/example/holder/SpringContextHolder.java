@@ -1,8 +1,10 @@
 package com.example.holder;
 
+import lombok.Getter;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 /**
@@ -12,19 +14,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class SpringContextHolder implements ApplicationContextAware {
 
+    @Getter
     private static ApplicationContext applicationContext;
 
-    public static ApplicationContext getApplicationContext() {
-        return applicationContext;
-    }
-
     @Override
-    public void setApplicationContext(ApplicationContext appContext) throws BeansException {
+    public void setApplicationContext(@NonNull ApplicationContext appContext) throws BeansException {
         applicationContext = appContext;
     }
 
     public static <T> T popBean(Class<T> clazz) {
-        //先判断是否为空
         if (applicationContext == null) {
             return null;
         }

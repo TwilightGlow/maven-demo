@@ -1,10 +1,21 @@
 spring:
+  main:
+    allow-circular-references: true
   datasource:
-    url: jdbc:mysql://localhost:3306/javen_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
-#    url: jdbc:mysql://localhost:3306/javen_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:h2:~/mydb  # 数据库
+    driver-class-name: org.h2.Driver
     username: root
-    password: 123456
+    password: test
+    h2:
+      console:
+        path: /h2-console  #h2嵌入式数据库控制台，可以通过浏览器访问
+        enabled: true
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/javen_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
+##    url: jdbc:mysql://localhost:3306/javen_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=GMT
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    username: root
+#    password: 123456
   profiles:
     active: dev
 
@@ -14,11 +25,11 @@ mybatis:
 schedule:
   enable: true
 
-logging:
-  level:
-    root: debug
-    org.springframework: error
-    com.example: debug
+#logging:
+#  level:
+#    root: debug
+#    org.springframework: error
+#    com.example: debug
 
 management:
   endpoints:
@@ -32,6 +43,7 @@ management:
   endpoint:
     health:
       show-details: always
+
 #staff:
 #  id: 45056102
 #  department: HUB

@@ -13,7 +13,7 @@ public @interface MyAnnotation {
 
     String value() default "Javen";
 
-    enum Color {BULE, RED, GREEN}
+    enum Color {BLUE, RED, GREEN}
 
     Color fruitColor() default Color.GREEN;
 }

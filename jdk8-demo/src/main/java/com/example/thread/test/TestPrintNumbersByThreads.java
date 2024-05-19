@@ -44,9 +44,9 @@ public class TestPrintNumbersByThreads {
         final Semaphore semaphore2 = new Semaphore(0);
         final Semaphore semaphore3 = new Semaphore(0);
 
-        new Thread(() -> testSemaphore(semaphore1, semaphore2)).start();
-        new Thread(() -> testSemaphore(semaphore2, semaphore3)).start();
-        new Thread(() -> testSemaphore(semaphore3, semaphore1)).start();
+        new Thread(() -> testSemaphore(semaphore1, semaphore2), "线程0").start();
+        new Thread(() -> testSemaphore(semaphore2, semaphore3), "线程1").start();
+        new Thread(() -> testSemaphore(semaphore3, semaphore1), "线程2").start();
         Thread.currentThread().join();
     }
 
@@ -55,7 +55,7 @@ public class TestPrintNumbersByThreads {
         // 因此synchronized代码块的作用在于：
         //   1. 相当于屏障，多个线程如果共用一个lock，同时只能有一个线程进入同步监视器的代码块
         //   2. wait方法必须在synchronized中，如果执行到程序会在这行停止，并允许其它就绪态线程进入，wait后会进入等待态必须被notify才会进入就绪态
-        //   3. notify也必须在synchronized中，在notify执行后synchronized的作用域结束再释放锁！！！！
+        //   3. notify也必须在synchronized中，在notify执行后并不会释放锁，而是在synchronized的作用域结束再释放锁！！！！
         synchronized (lock) {
             System.out.println(Thread.currentThread().getName() + ": 这行只会跑一次，并且不是按照0/1/2的顺序执行！！！！");
             try {
@@ -84,11 +84,13 @@ public class TestPrintNumbersByThreads {
             reentrantLock.lock();
             while (count.get() <= 100) {
                 System.out.println("Thread " + Thread.currentThread().getName() + ": " + count.getAndIncrement());
+                // signal相当于notify，用于唤醒执行线程
                 nextCondition.signal();
                 Thread.sleep(2000);
+                // await相当于wait，会释放锁并在当前行停止，仅能被相同condition的signal唤醒
                 currentCondition.await();
             }
-            reentrantLock.unlock();
+            // reentrantLock.unlock();
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
