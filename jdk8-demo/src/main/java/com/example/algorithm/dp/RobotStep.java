@@ -19,11 +19,13 @@ import java.util.Arrays;
  */
 public class RobotStep {
 
-    int[][] cache = new int[10][10];
+    private final int row = 3;
+    private final int column = 7;
+    private final int[][] cache = new int[row + 1][column + 1];
 
     @Test
     public void recursiveMethod() {
-        int recursive = recursive(3, 7, 1, 1);
+        int recursive = recursive(row, column, 1, 1);
         System.out.println(recursive);
         // System.out.println(Arrays.deepToString(cache));
     }
