@@ -2,9 +2,9 @@ package com.example.algorithm.dp;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -16,11 +16,11 @@ import java.util.stream.IntStream;
 public class Lis {
 
     // int[] nums = new int[]{1, 3, 2, 5, 9, 7, 100, 99, 6, 8, 5, 9};
-    int[] nums = new int[]{1, 3, 3, 4, 5, 1};
+    int[] nums = {1, 3, 5, 3, 9, 1, 2, 3, 4};
 
     // 使用递归，记忆化搜索，带备忘录的递归，如果不用记忆化时间复杂度为O(n * 2^n)
     final Map<Integer, Integer> map = new HashMap<>();
-    final Map<Integer, Integer> cache = new HashMap<>();
+
     @Test
     public void recursive() {
         int ans = IntStream.range(0, nums.length)
@@ -29,8 +29,9 @@ public class Lis {
         System.out.println("最大上升子序列: " + ans);
 
         int ans1 = IntStream.range(0, nums.length)
-                .map(i -> recursiveContinuousSearch(nums, i))
+                .map(i -> continuousIncreasingSearch(nums, i))
                 .max().orElse(0);
+
         System.out.println("最大连续上升子序列: " + ans1);
     }
 
@@ -47,18 +48,16 @@ public class Lis {
         return maxLength;
     }
 
-    private int recursiveContinuousSearch(int[] nums, int index) {
+    private int continuousIncreasingSearch(int[] nums, int index) {
         if (index == nums.length - 1) return 1;
-        if (cache.containsKey(index)) return cache.get(index);
         int maxLength = 1;
         for (int i = index + 1; i < nums.length; i++) {
-            if (nums[i] == nums[index] + 1) {
-                maxLength = Math.max(maxLength, recursiveContinuousSearch(nums, i) + 1);
+            if (nums[i] > nums[i - 1]) {
+                maxLength++;
             } else {
                 break;
             }
         }
-        cache.put(index, maxLength);
         return maxLength;
     }
 
@@ -86,16 +85,18 @@ public class Lis {
 
     @Test
     public void dynamicPlanning2() {
-        int[] f = new int[nums.length] ;
+        int[] f = new int[nums.length];
         Arrays.fill(f, 1);
+        int ans = 1;
         for (int i = nums.length - 1; i >= 0; i--) {
             for (int j = i + 1; j < nums.length; j++) {
                 if (nums[j] > nums[i]) {
                     f[i] = Math.max(f[i], f[j] + 1);
                 }
             }
+            ans = Math.max(ans, f[i]);
         }
-        int ans = Arrays.stream(f).max().orElse(0);
+        // int ans = Arrays.stream(f).max().orElse(0);
         System.out.println("最大上升子序列: " + ans);
     }
 

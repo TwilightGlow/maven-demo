@@ -43,9 +43,11 @@ public class MergeSort {
         int[] L = new int[n1];
         int[] R = new int[n2];
         // 给左右两个数组赋值，这一步是为了拷贝数据
+        // System.arraycopy(nums, left, L, 0, n1);
         for (int i = 0; i < n1; i++) {
             L[i] = nums[left + i];
         }
+        // System.arraycopy(nums, mid + 1, R, 0, n2);
         for (int j = 0; j < n2; j++) {
             R[j] = nums[mid + 1 + j];
         }
@@ -65,7 +67,7 @@ public class MergeSort {
             k++;
         }
 
-        // 有可能左边数组的第一个元素比右边数组的每一个元素都大，因此上面的循环完还需要保证i=n1并且j=n2
+        // 有可能其中一边的数组还没有复制完，因此上面的循环完还需要保证i=n1并且j=n2
         while (i < n1) {
             nums[k] = L[i];
             i++;

@@ -2,7 +2,11 @@ package com.example.stream;
 
 import org.junit.Test;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,7 +14,6 @@ import java.util.List;
  * @author Javen
  * @date 2022/3/16
  */
-@SuppressWarnings("unchecked")
 public class TestObjectStream {
 
     @Test
@@ -30,17 +33,27 @@ public class TestObjectStream {
         Teacher teacher = new Teacher();
         teacher.setName("Javen");
         teacher.setAge(28);
-        try (FileOutputStream fileOutputStream = new FileOutputStream("src/main/java/com/example/stream/list.txt");
-             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
-            objectOutputStream.writeObject(strings);
-//            objectOutputStream.writeObject(teacher);
-            try (FileInputStream fileInputStream = new FileInputStream("src/main/java/com/example/stream/list.txt");
-                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
-                Object object = objectInputStream.readObject();
-                List<String> strings1 = (List<String>) object;
-//                Teacher strings1 = (Teacher) object;
-                System.out.println(strings1);
-            }
+//         try (FileOutputStream fileOutputStream = new FileOutputStream("src/main/java/com/example/stream/list.txt");
+//              ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
+//             objectOutputStream.writeObject(strings);
+// //            objectOutputStream.writeObject(teacher);
+//             try (FileInputStream fileInputStream = new FileInputStream("src/main/java/com/example/stream/list.txt");
+//                  ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+//                 Object object = objectInputStream.readObject();
+//                 List<String> strings1 = (List<String>) object;
+// //                Teacher strings1 = (Teacher) object;
+//                 System.out.println(strings1);
+//             }
+//         }
+
+        try (ObjectOutputStream outputStream = new ObjectOutputStream(Files.newOutputStream(Paths.get("src/main/resources/object-stream.txt")));
+             ObjectInputStream inputStream = new ObjectInputStream(Files.newInputStream(Paths.get("src/main/resources/object-stream.txt")))) {
+            // outputStream.writeObject(strings);
+            outputStream.writeObject(teacher);
+            Object object = inputStream.readObject();
+            // List<String> strings1 = (List<String>) object;
+            Teacher teacher1 = (Teacher) object;
+            System.out.println(teacher1);
         }
     }
 }

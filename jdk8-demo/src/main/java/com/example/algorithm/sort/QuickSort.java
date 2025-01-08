@@ -31,6 +31,9 @@ import java.util.Arrays;
  *  <P>平均情况:每一次切分选择的基准数字不是最大值和最小值，也不是中值，这种情况我们也可以用数学归纳法证明，快速排序的时间复杂度为O(nlogn),由于数学归纳法有很多数学相关的知识，容易使我们混乱，所以这里就不对平均情况的时间复杂度做证明了。
  * </pre>
  *
+ * 快排是不稳定的排序算法，因为在排序的过程中，元素的相对位置会发生变化。
+ * 例如 [5a, 3, 2, 5b, 1]，第一轮使用5a作为基准元素，排序后变为 [3, 2, 1, 5b, 5a]，5a和5b的相对位置发生了变化。
+ *
  * @author zhangjw54
  */
 public class QuickSort {
@@ -45,8 +48,11 @@ public class QuickSort {
 
     private void quickSort(int[] nums, int start, int end) {
         if (start >= end) return;
-        // 得到基准元素的为止
-        int middle = partition(nums, start, end);
+        // 得到基准元素的位置，双边快排
+        // int middle = partition(nums, start, end);
+
+        // 单边快排
+        int middle = singlePartition(nums, start, end);
         // 分别对两部分进行递归排序
         quickSort(nums, start, middle - 1);
         quickSort(nums, middle + 1, end);
@@ -83,5 +89,20 @@ public class QuickSort {
         return right;
     }
 
-
+    private int singlePartition(int[] nums, int start, int end) {
+        int pivot = nums[end];
+        int i = start - 1;
+        for (int j = start; j < end; j++) {
+            if (nums[j] < pivot) {
+                i++;
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
+        int temp = nums[i + 1];
+        nums[i + 1] = nums[end];
+        nums[end] = temp;
+        return i + 1;
+    }
 }
