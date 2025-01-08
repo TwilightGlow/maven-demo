@@ -17,7 +17,7 @@ import java.util.stream.StreamSupport;
  *
  * @author zhangjw54
  */
-public class TestSpliterator {
+public class StreamSpliterator {
 
     @Test
     public void spliterator() {

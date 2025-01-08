@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
  * @author Javen
  * @date 2022/3/6
  */
-public class TestLoadProcess {
+public class FindKthElementInSortedArrayLoadProcess {
 
     static {
         System.out.println("TestLoadProcess的静态代码块");
@@ -43,8 +43,8 @@ public class TestLoadProcess {
 
     @Test
     public void testClassLoader() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        Class<?> aClass = TestLoadProcess.class.getClassLoader().loadClass("com.example.load.Teacher");
-        Class<?> bClass = TestLoadProcess.class.getClassLoader().loadClass("com.example.load.Teacher");
+        Class<?> aClass = FindKthElementInSortedArrayLoadProcess.class.getClassLoader().loadClass("com.example.load.Teacher");
+        Class<?> bClass = FindKthElementInSortedArrayLoadProcess.class.getClassLoader().loadClass("com.example.load.Teacher");
         Class<?> cClass = Student.class.getClassLoader().loadClass("com.example.load.Teacher");
         System.out.println(aClass);
         System.out.println(bClass);

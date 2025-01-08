@@ -18,7 +18,7 @@ import java.util.GregorianCalendar;
  * @author Javen
  * @date 2022/3/17
  */
-public class TestDate {
+public class FindKthElementInSortedArrayDate {
 
     @Test
     public void testSimpleDate() {

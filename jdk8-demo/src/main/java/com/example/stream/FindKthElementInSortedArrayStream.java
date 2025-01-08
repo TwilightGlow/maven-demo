@@ -9,7 +9,7 @@ import java.io.*;
  * @author Javen
  * @date 2022/3/16
  */
-public class TestStream {
+public class FindKthElementInSortedArrayStream {
 
     @Test
     // 字符流专门用来处理文本类文件 (Reader <---> Writer)，不能处理其它类型数据文件

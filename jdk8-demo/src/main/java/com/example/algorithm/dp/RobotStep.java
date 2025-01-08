@@ -27,7 +27,7 @@ public class RobotStep {
     public void recursiveMethod() {
         int recursive = recursive(row, column, 1, 1);
         System.out.println(recursive);
-        // System.out.println(Arrays.deepToString(cache));
+        System.out.println(Arrays.deepToString(cache));
     }
 
     private int recursive(int m, int n, int currentRow, int currentColumn) {

@@ -2,14 +2,12 @@ package com.example.function;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
  * @author zhangjw54
  */
-public class TestReduce {
+public class StreamReduce {
 
     @Test
     // https://stackoverflow.com/questions/24308146/why-is-a-combiner-needed-for-reduce-method-that-converts-type-in-java-8

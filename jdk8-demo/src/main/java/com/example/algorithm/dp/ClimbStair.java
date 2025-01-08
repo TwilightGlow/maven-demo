@@ -26,6 +26,7 @@ public class ClimbStair {
     private int recursive(int n) {
         if (n < 3) return n;
         if (memo[n] != 0) return memo[n];
+
         memo[n] = recursive(n - 1) + recursive(n - 2);
         return memo[n];
     }

@@ -13,7 +13,7 @@ import java.util.Base64;
  * @author Javen
  * @date 2022/3/16
  */
-public class TestEncryptStream {
+public class FindKthElementInSortedArrayEncryptStream {
 
     private void encrypt(String src, String desc) throws IOException {
         try (BufferedInputStream bufferedInputStream = new BufferedInputStream(Files.newInputStream(Paths.get(src)));

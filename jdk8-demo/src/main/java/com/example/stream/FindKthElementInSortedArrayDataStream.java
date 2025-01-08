@@ -10,7 +10,7 @@ import java.nio.file.Paths;
  * @author Javen
  * @date 2022/3/17
  */
-public class TestDataStream {
+public class FindKthElementInSortedArrayDataStream {
 
     @Test
     // DataStream是为了方便操作基本数据类型和String类型

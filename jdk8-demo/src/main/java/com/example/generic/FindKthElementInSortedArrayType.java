@@ -17,7 +17,7 @@ import java.util.List;
  *
  * @author zhangjw54
  */
-public class TestType<T> {
+public class FindKthElementInSortedArrayType<T> {
     public List clazz;
     public List<T> parameterizedType;
     public T[] genericArrayType;
@@ -27,7 +27,7 @@ public class TestType<T> {
     // 获取属性所对应的Type
     @Test
     public void testType() {
-        for (Field field : TestType.class.getFields()) {
+        for (Field field : FindKthElementInSortedArrayType.class.getFields()) {
             System.out.println(field.getName() + " : " + field.getGenericType().getClass());
             // 对于wildcardType类型，获取属性本身的类型也是ParameterizedType
             // 如果List<T>，那么getActualTypeArguments()获取到的就是TypeVariableImpl
@@ -50,13 +50,13 @@ public class TestType<T> {
     public void getType() throws NoSuchFieldException {
         // Field类中的getType()返回字段所属的Class，getGenericType()返回字段所属的Type，印证了对于普通对象Type就是Class
         // getClass()是返回Field类本身所在类，所以jdk1.5用getType()表示字段实际所指向的类
-        Field clazz = TestType.class.getDeclaredField("clazz");
+        Field clazz = FindKthElementInSortedArrayType.class.getDeclaredField("clazz");
         System.out.println(clazz.getClass());
         System.out.println(clazz.getType());
         System.out.println(clazz.getGenericType());
         System.out.println(clazz.getType() == clazz.getGenericType());
 
-        Field parameterizedType = TestType.class.getDeclaredField("parameterizedType");
+        Field parameterizedType = FindKthElementInSortedArrayType.class.getDeclaredField("parameterizedType");
         System.out.println(parameterizedType.getClass());
         System.out.println(parameterizedType.getType());
         System.out.println(parameterizedType.getGenericType());
@@ -69,7 +69,7 @@ public class TestType<T> {
     // 获取属性上泛型所对应的真实类型
     @Test
     public void getActualGeneric() throws NoSuchFieldException {
-        Field list = TestType.class.getDeclaredField("list");
+        Field list = FindKthElementInSortedArrayType.class.getDeclaredField("list");
         Class<?> type = list.getType();
         Type genericType = list.getGenericType();
         if (genericType instanceof ParameterizedType) {

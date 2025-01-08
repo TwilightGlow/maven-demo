@@ -10,7 +10,7 @@ import java.util.stream.*;
 /**
  * @author zhangjw54
  */
-public class TestShuffle {
+public class StreamShuffle {
 
     @Test
     public void eagerShuffleCollector() {

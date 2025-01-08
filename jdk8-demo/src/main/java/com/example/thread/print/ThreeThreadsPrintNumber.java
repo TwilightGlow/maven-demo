@@ -1,9 +1,10 @@
-package com.example.thread.test;
+package com.example.thread.print;
 
 
 import org.junit.Test;
 
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -12,7 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * @author zhangjw54
  */
-public class TestPrintNumbersByThreads {
+public class ThreeThreadsPrintNumber {
 
     final AtomicInteger count = new AtomicInteger(1);
     final Object lock = new Object();

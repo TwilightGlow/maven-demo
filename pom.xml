@@ -21,6 +21,7 @@
         <module>design-mode-demo</module>
         <module>spring-framework-demo</module>
         <module>spring-boot-demo</module>
+        <module>springboot3-demo</module>
         <module>spring-mail-demo</module>
         <module>disruptor-demo</module>
         <module>encryption-algorithm-demo</module>
@@ -134,7 +135,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-<!--                <version>3.2.2</version>-->
+                <version>3.2.5</version>
             </plugin>
 
 <!--            <plugin>-->
