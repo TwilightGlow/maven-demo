@@ -13,6 +13,8 @@ import java.util.Arrays;
 public class InsertionSort {
 
     private int[] nums = {12, 4, 2, 8, 3, 1, 15, 7};
+    // 在只有一个元素乱序的情况下，插入排序的时间复杂度是O(n)是最优解
+    // 即使是优化过的冒泡排序，也需要遍历两轮 O(2n)的时间复杂度
     // private int[] nums = {1, 2, 3, 4, 5, 1000, 6, 7, 8, 9, 10};
 
     @Test

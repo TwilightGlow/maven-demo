@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.LockSupport;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -24,6 +25,21 @@ public class ThreeThreadsPrintNumber {
         new Thread(() -> testWaitNotify(2), "线程2").start();
         new Thread(() -> testWaitNotify(1), "线程1").start();
         new Thread(() -> testWaitNotify(0), "线程0").start();
+        Thread.currentThread().join();
+    }
+
+    @Test
+    public void lockSupportPrint() throws InterruptedException {
+        final Thread[] threads = new Thread[3];
+        for (int i = 0; i < 3; i++) {
+            int threadId = i;
+            threads[i] = new Thread(() -> testLockSupport(threadId, threads), "线程" + i);
+        }
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        // 初始唤醒线程0（对应count=1时，(1-1)%3=0）
+        // LockSupport.unpark(threads[0]);
         Thread.currentThread().join();
     }
 
@@ -78,6 +94,33 @@ public class ThreeThreadsPrintNumber {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    private void testLockSupport(int threadId, Thread[] threads) {
+        while (true) {
+            // 退出条件：count > 100
+            if (count.get() > 100) break;
+
+            // 检查是否轮到自己执行
+            if ((count.get() - 1) % 3 == threadId) {
+                // 打印并递增
+                System.out.println(Thread.currentThread().getName() + ": " + count.getAndIncrement());
+
+                // 计算下一个要唤醒的线程ID
+                int nextThreadId = (threadId + 1) % 3;
+                LockSupport.unpark(threads[nextThreadId]);
+            } else {
+                // 阻塞当前线程
+                LockSupport.park();
+
+                // 被唤醒后再次检查退出条件
+                if (count.get() > 100) break;
+            }
+        }
+
+        // 确保最后一个线程唤醒其他线程以正确退出
+        int nextThreadId = (threadId + 1) % 3;
+        LockSupport.unpark(threads[nextThreadId]);
     }
 
     private void testCondition(Condition currentCondition, Condition nextCondition) {

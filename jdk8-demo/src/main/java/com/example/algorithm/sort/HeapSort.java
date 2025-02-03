@@ -15,6 +15,12 @@ public class HeapSort {
     public void heapSort() {
         int n = nums.length;
         // 构建最大堆，从最后一个非叶子节点开始
+        // 建堆的过程就是将每个非叶子节点（从后往前）逐个向下堆化
+        // 假如有N个节点，那么高度为H=logN，最后一层每个父节点最多只需要下调1次，倒数第二层最多只需要下调2次，顶点最多需要下调H次，而最后一层父节点共有2^(H-1)个,倒数第二层公有2^(H-2),顶点只有1(2^0)个，所以总共的时间复杂度为s = 1 * 2^(H-1) + 2 * 2^(H-2) + ... + (H-1) * 2^1 + H * 2^0将H代入后s= 2N - 2 - log2(N)，近似的时间复杂度就是O(N)。经评论提醒，H=log2(N)  +  1
+        // 作者：wuxinliulei
+        // 链接：https://www.zhihu.com/question/20729324/answer/231955716
+        // 来源：知乎
+        // 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
         for (int i = n / 2 - 1; i >= 0; i--) {
             heapify(nums, n, i);
         }
@@ -30,7 +36,8 @@ public class HeapSort {
         System.out.println(Arrays.toString(nums));
     }
 
-    // 堆化，作用是调整n个元素堆中第i个元素的位置
+    // 堆化，作用是在n个元素堆中调整第i个元素的位置。堆化指的是将一个节点以及它的子节点调整到符合堆的性质。
+    // 将以i为根节点的子树调整为堆
     // 构建一个大顶堆，n表示堆中元素的格式，i表示元素的位置，从i节点开始向下调整
     private void heapify(int[] nums, int n, int i) {
         int largest = i; // 假设当前节点是最大值
