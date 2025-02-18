@@ -1,8 +1,12 @@
 package com.example.algorithm.tree;
 
+import lombok.Data;
+import lombok.Getter;
+
 /**
  * @author zhangjw54
  */
+@Data
 public class TreeNode {
 
     int val;

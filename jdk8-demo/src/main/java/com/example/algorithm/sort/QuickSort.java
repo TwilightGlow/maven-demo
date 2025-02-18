@@ -48,8 +48,11 @@ public class QuickSort {
 
     private void quickSort(int[] nums, int start, int end) {
         if (start >= end) return;
-        // 得到基准元素的位置
-        int middle = partition(nums, start, end);
+        // 得到基准元素的位置，双边快排
+        // int middle = partition(nums, start, end);
+
+        // 单边快排
+        int middle = singlePartition(nums, start, end);
         // 分别对两部分进行递归排序
         quickSort(nums, start, middle - 1);
         quickSort(nums, middle + 1, end);
@@ -86,5 +89,20 @@ public class QuickSort {
         return right;
     }
 
-
+    private int singlePartition(int[] nums, int start, int end) {
+        int pivot = nums[end];
+        int i = start - 1;
+        for (int j = start; j < end; j++) {
+            if (nums[j] < pivot) {
+                i++;
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
+        int temp = nums[i + 1];
+        nums[i + 1] = nums[end];
+        nums[end] = temp;
+        return i + 1;
+    }
 }

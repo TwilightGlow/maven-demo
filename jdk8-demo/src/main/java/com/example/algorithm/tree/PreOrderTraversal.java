@@ -3,16 +3,13 @@ package com.example.algorithm.tree;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
 /**
- * 二叉树的中序遍历
- *
  * @author zhangjw54
  */
-public class InOrderTraversal {
+public class PreOrderTraversal {
 
     private final TreeNode root;
 
@@ -33,51 +30,57 @@ public class InOrderTraversal {
 
     private void recursive(TreeNode root, List<String> path) {
         if (root == null) return;
-        recursive(root.left, path);
         path.add(String.valueOf(root.val));
+        recursive(root.left, path);
         recursive(root.right, path);
     }
 
     @Test
     public void queueTraversal() {
         List<Integer> path = new ArrayList<>();
-        LinkedList<TreeNode> stack = new LinkedList<>();
-        TreeNode current = root;
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
 
-        while (current != null || !stack.isEmpty()) {
-            // Reach the left most Node of the current Node
-            while (current != null) {
-                stack.push(current);
-                current = current.left;
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            path.add(node.val);
+
+            // 先压右子树
+            if (node.right != null) {
+                stack.push(node.right);
             }
 
-            // Current must be null at this point
-            current = stack.pop();
-            path.add(current.val);
-
-            // We have visited the node and its left subtree. Now, it's right subtree's turn
-            current = current.right;
+            // 再压左子树
+            if (node.left != null) {
+                stack.push(node.left);
+            }
         }
         System.out.println(path);
     }
 
     @Test
     public void morrisTraversal() {
-        List<String> path = new ArrayList<>();
+        List<Integer> path = new ArrayList<>();
         TreeNode node = root;
+
         while (node != null) {
             if (node.left == null) {
-                path.add(String.valueOf(node.val));
-                node = node.right;
+                path.add(node.val);  // 访问根节点
+                node = node.right;   // 遍历右子树
             } else {
                 TreeNode pre = node.left;
-                while (pre.right != null) {
+                while (pre.right != null && pre.right != node) {
                     pre = pre.right;
                 }
-                pre.right = node;
-                TreeNode temp = node;
-                node = node.left;
-                temp.left = null;
+
+                if (pre.right == null) {
+                    path.add(node.val);  // 访问根节点
+                    pre.right = node;    // 建立临时连接
+                    node = node.left;    // 遍历左子树
+                } else {
+                    pre.right = null;    // 移除临时连接
+                    node = node.right;   // 遍历右子树
+                }
             }
         }
         System.out.println(path);
