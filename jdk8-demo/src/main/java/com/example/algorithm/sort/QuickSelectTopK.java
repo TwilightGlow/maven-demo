@@ -8,24 +8,37 @@ import java.util.Arrays;
 /**
  * @author zhangjw54
  */
-public class TestQuick {
+public class QuickSelectTopK {
 
     private int[] nums = {12, 4, 6, 8, 3, 1, 15, 7};
+    private int k = 6;
 
     @Test
     public void print() {
-        quickSort(nums, 0, nums.length - 1);
-        System.out.println(Arrays.toString(nums));
+        int[] topK = findTopK(nums, k);
+        System.out.println(Arrays.toString(topK));
     }
 
-    private void quickSort(int[] nums, int start, int end) {
+    private int[] findTopK(int[] nums, int k) {
+        if (k >= nums.length) {
+            return nums;
+        }
+        quickSelect(nums, 0, nums.length - 1, nums.length - k);
+        return Arrays.copyOfRange(nums, nums.length - k, nums.length);
+    }
+
+    private void quickSelect(int[] nums, int start, int end, int k) {
         if (start >= end) return;
 
         int middle = partition(nums, start, end);
 
-        quickSort(nums, start, middle - 1);
-        quickSort(nums, middle + 1, end);
-
+        if (middle == k) {
+            return; // 找到第k大的元素
+        } else if (middle < k) {
+            quickSelect(nums, middle + 1, end, k); // 在右半部分继续查找
+        } else {
+            quickSelect(nums, start, middle - 1, k); // 在左边部分继续查找
+        }
     }
 
     private int partition(int[] nums, int start, int end) {

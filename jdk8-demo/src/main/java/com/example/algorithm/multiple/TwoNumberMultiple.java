@@ -41,7 +41,7 @@ public class TwoNumberMultiple {
         StringBuilder sb = new StringBuilder();
         for (int num : result) {
             // 忽略前导零
-            if (!(sb.length() == 0 && num == 0)) {
+            if (!(sb.length() == 0 && (num == 0 || num == -1))) {
                 sb.append(num);
             }
         }

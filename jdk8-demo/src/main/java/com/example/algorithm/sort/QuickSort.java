@@ -29,6 +29,31 @@ import java.util.Arrays;
  *  <P>快速排序的一次切分从两头开始交替搜索，直到left和right重合，因此，一次切分算法的时间复杂度为O(n)但整个快速排序的时间复杂度和切分的次数相关。最优情况∶每一次切分选择的基准数字刚好将当前序列等分。
  *  <P>如果我们把数组的切分看做是一个树，那么上图就是它的最优情况的图示，共切分了logn次，所以，最优情况下快速排序的时间复杂度为O(nlogn); 最坏情况:每一次切分选择的基准数字是当前序列中最大数或者最小数，这使得每次切分都会有一个子组，那么总共就得切分n次，所以，最坏情况下，快速排序的时间复杂度为O(n^2);
  *  <P>平均情况:每一次切分选择的基准数字不是最大值和最小值，也不是中值，这种情况我们也可以用数学归纳法证明，快速排序的时间复杂度为O(nlogn),由于数学归纳法有很多数学相关的知识，容易使我们混乱，所以这里就不对平均情况的时间复杂度做证明了。
+ *  <P>双边快排（Hoare 分区方案）通常在处理大量重复元素时表现更好的主要原因是它能够更有效地平衡分区，减少递归深度，从而避免性能退化。以下是详细解释：
+ *
+ *  <P>1. 分区平衡性
+ *  Hoare 分区方案
+ * 工作原理：Hoare 分区方案通过使用两个指针（一个从左到右，一个从右到左）来定位交换元素，直到两个指针相遇。这样可以确保所有小于基准值的元素被交换到基准值左侧，所有大于基准值的元素被交换到基准值右侧。
+ * 处理重复元素：当遇到重复元素时，左右指针会继续移动而不会停下来，这使得分区能够相对均匀地处理大量重复元素。重复元素被分散到两侧的子数组中，避免了集中在一侧的情况。
+ *  Lomuto 分区方案
+ * 工作原理：Lomuto 分区方案使用一个指针从左向右移动，将小于基准值的元素交换到前面的位置，最后将基准值交换到中间指定位置。
+ * 处理重复元素：当遇到重复元素时，这些元素会被处理成与其他较小或较大的元素一样，可能导致大量重复元素集中在一侧，从而导致不平衡分区。这会增加某些分区的大小，使递归深度增加，最终导致时间复杂度退化为 O(n^2)。
+ *
+ *  <P>2. 递归深度
+ * Hoare 分区方案
+ * 递归深度：由于 Hoare 分区方案能够更均匀地分区，每次递归处理的数组长度较为均衡，从而递归深度较浅。
+ * 时间复杂度：在最佳和平均情况下，递归深度通常为 O(log n)，时间复杂度为 O(n log n)。
+ * Lomuto 分区方案
+ * 递归深度：如果分区不均衡，特别是遇到大量重复元素时，递归深度会增加。
+ * 时间复杂度：在最坏情况下（如处理大量重复元素或接近有序的数组），递归深度可能接近 O(n)，导致时间复杂度退化为 O(n^2)。
+ *
+ *  <P>3. 交换次数
+ * Hoare 分区方案
+ * 交换次数：Hoare 分区方案在处理重复元素时，交换次数较少，因为大部分重复元素不会被频繁交换。指针移动到合适的位置后才进行交换，因此交换次数相对较少。
+ * 效率：通过减少不必要的交换，提高了处理效率。
+ * Lomuto 分区方案
+ * 交换次数：在 Lomuto 分区方案中，重复元素可能会导致不必要的交换，因为每次遇到小于基准值的元素都会进行交换操作。
+ * 效率：增加的交换次数会降低整体效率，特别是在处理大量重复元素时。
  * </pre>
  *
  * 快排是不稳定的排序算法，因为在排序的过程中，元素的相对位置会发生变化。
@@ -38,7 +63,7 @@ import java.util.Arrays;
  */
 public class QuickSort {
 
-    int[] nums = {12, 4, 6, 8, 3, 1, 15, 7};
+    int[] nums = {2, 4, 6, 8, 3, 1, 15, 7};
 
     @Test
     public void quickSort() {
@@ -48,11 +73,11 @@ public class QuickSort {
 
     private void quickSort(int[] nums, int start, int end) {
         if (start >= end) return;
-        // 得到基准元素的位置，双边快排
-        // int middle = partition(nums, start, end);
+        // 得到基准元素的位置，双边快排 Hoare分区方案
+        int middle = partition(nums, start, end);
 
-        // 单边快排
-        int middle = singlePartition(nums, start, end);
+        // 单边快排 Lomuto分区方案
+        // int middle = singlePartition(nums, start, end);
         // 分别对两部分进行递归排序
         quickSort(nums, start, middle - 1);
         quickSort(nums, middle + 1, end);
@@ -91,18 +116,22 @@ public class QuickSort {
 
     private int singlePartition(int[] nums, int start, int end) {
         int pivot = nums[end];
-        int i = start - 1;
+        int i = start; // i 指向小于基准的最后一个元素的下一个位置
         for (int j = start; j < end; j++) {
             if (nums[j] < pivot) {
+                if (i != j) {
+                    int temp = nums[i];
+                    nums[i] = nums[j];
+                    nums[j] = temp;
+                }
                 i++;
-                int temp = nums[i];
-                nums[i] = nums[j];
-                nums[j] = temp;
             }
         }
-        int temp = nums[i + 1];
-        nums[i + 1] = nums[end];
-        nums[end] = temp;
-        return i + 1;
+        if (i != end) {
+            int temp = nums[i];
+            nums[i] = nums[end];
+            nums[end] = temp;
+        }
+        return i;
     }
 }
