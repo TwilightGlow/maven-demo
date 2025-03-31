@@ -1,5 +1,6 @@
 package com.example.algorithm.sort;
 
+import cn.hutool.core.util.ArrayUtil;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -84,6 +85,14 @@ public class QuickSort {
     }
 
     private int partition(int[] nums, int start, int end) {
+
+        // 优化：三数取中法
+        int mid = start + (end - start) / 2;
+        if (nums[start] > nums[mid]) ArrayUtil.swap(nums, start, mid);
+        if (nums[start] > nums[end]) ArrayUtil.swap(nums, start, end);
+        if (nums[mid] > nums[end]) ArrayUtil.swap(nums, mid, end);
+        ArrayUtil.swap(nums, mid, end);
+
         int pivot = nums[start]; // 基准元素
         int left = start + 1; // 左指针
         int right = end; // 右指针
@@ -133,5 +142,33 @@ public class QuickSort {
             nums[end] = temp;
         }
         return i;
+    }
+
+    private int partitionOpt(int[] nums, int low, int high) {
+
+        // 优化：三数字交换法
+        // 1. 选取中间值作为基准值
+        int mid = low + (high - low) / 2;
+        // 2. 交换三个数，使得 low < mid < high
+        if (nums[low] > nums[mid]) ArrayUtil.swap(nums, low, mid);
+        if (nums[low] > nums[high]) ArrayUtil.swap(nums, low, high);
+        if (nums[mid] > nums[high]) ArrayUtil.swap(nums, mid, high);
+        // 3. 选择中间数作为基准值，并移动到末尾
+        ArrayUtil.swap(nums, mid, high);
+
+        int pivot = nums[high];
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (nums[j] <= pivot) {
+                i++;
+                int temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+            }
+        }
+        int temp = nums[i + 1];
+        nums[i + 1] = nums[high];
+        nums[high] = temp;
+        return i + 1;
     }
 }
