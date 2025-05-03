@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 /**
  * 给定不同面额的硬币coins和一个总金额amount，编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果无法凑成总金额，则返回-1。
+ * 完全背包问题 - 硬币可以重复
  *
  * @author zhangjw54
  */

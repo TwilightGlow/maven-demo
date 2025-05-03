@@ -20,6 +20,7 @@ public class ShellSort {
 
     @Test
     public void print() {
+
         shellSort(nums);
         System.out.println(Arrays.toString(nums));
     }

@@ -35,15 +35,20 @@ public class NextGreaterElement {
 
     public int[] nextGreaterElements(int[] nums) {
         int length = nums.length;
-        Deque<Integer> stack = new LinkedList<>();
+        // 单调栈
+        LinkedList<Integer> stack = new LinkedList<>();
         int[] res = new int[length];
         Arrays.fill(res, -1);
-        for (int i = 0; i < length * 2; i++) {
-            while(!stack.isEmpty() && nums[stack.peek()] < nums[i % length]) {
+        for (int i = 0; i < length * 2 - 1; i++) {
+            int index = i % length;
+            while(!stack.isEmpty() && nums[stack.peek()] < nums[index]) {
                 int tmp = stack.pop();
-                res[tmp] = nums[i % length];
+                res[tmp] = nums[index];
             }
-            stack.push(i % length);
+            // 只在第一次遍历时入栈
+            if (i < length) {
+                stack.push(index);
+            }
         }
         return res;
     }

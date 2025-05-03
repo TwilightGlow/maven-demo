@@ -12,7 +12,7 @@ public class TrieTest {
         Trie trie = new Trie();
 
         // 插入单词
-        trie.insert("apple");
+        trie.insert("苹果");
         trie.insert("apple");
         trie.insert("app");
         trie.insert("banana");

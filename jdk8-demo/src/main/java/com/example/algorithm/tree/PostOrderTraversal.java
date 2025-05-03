@@ -17,10 +17,15 @@ public class PostOrderTraversal {
         root = new TreeNode(1);
         root.left = new TreeNode(2);
         root.right = new TreeNode(3);
-        root.right.left = new TreeNode(4);
-        root.right.right = new TreeNode(5);
+        root.left.left = new TreeNode(4);
+        root.left.right = new TreeNode(5);
+        root.right.left = new TreeNode(6);
+        root.right.right = new TreeNode(7);
+        root.left.left.left = new TreeNode(8);
+        root.left.left.left.right = new TreeNode(9);
     }
 
+    @Test
     public void recursiveTraversal() {
         List<String> path = new ArrayList<>();
         recursive(root, path);
@@ -66,6 +71,7 @@ public class PostOrderTraversal {
                 stack.push(current);
                 current = current.left;
             }
+            // 相比于中序遍历，这个地方不能直接pop打印，而是要先遍历右子树
             current = stack.peek();
             if (current.right == null || current.right == lastVisited) {
                 path.add(current.val);
